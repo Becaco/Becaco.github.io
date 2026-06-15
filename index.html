@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BECACO — Between Canon and Coincidence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:    #0c0a08;
+      --bg2:   #110f0c;
+      --bg3:   #171310;
+      --cream: #f0e6d3;
+      --muted: rgba(240,230,211,.55);
+      --gold:  #c9a24c;
+      --gold-lt: #e8d5a3;
+      --gold-dk: #8a6d2b;
+      --terra: #b85a3a;
+      --terra-lt: #d4795a;
+      --jade:  #3d8b7a;
+      --jade-lt: #5aab9a;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+
+    body {
+      font-family:'Crimson Pro', serif;
+      background:var(--bg);
+      color:var(--cream);
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-canvas {
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+    }
+    .bg-canvas::before {
+      content:'';
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(212,168,67,.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(61,139,122,.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 60% 10%, rgba(184,90,58,.04) 0%, transparent 60%);
+    }
+    .grain {
+      position:absolute; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity:.035;
+    }
+    .mesoamerican-top {
+      position:fixed; top:0; left:0; right:0; height:3px; z-index:1000;
+      background:repeating-linear-gradient(
+        90deg,
+        var(--gold) 0,var(--gold) 16px,
+        transparent 16px,transparent 32px,
+        var(--terra) 32px,var(--terra) 48px,
+        transparent 48px,transparent 64px,
+        var(--jade) 64px,var(--jade) 80px,
+        transparent 80px,transparent 96px
+      );
+      opacity:.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position:fixed; top:3px; left:0; right:0; z-index:500;
+      padding:1.2rem 2.5rem;
+      display:flex; justify-content:space-between; align-items:center;
+      background:rgba(12,10,8,.82);
+      border-bottom:1px solid rgba(201,162,76,.15);
+      backdrop-filter:blur(20px);
+      transition:all .3s;
+    }
+    .logo {
+      font-family:'Cinzel', serif;
+      font-size:1.5rem; font-weight:900;
+      letter-spacing:.08em;
+      color:var(--cream);
+      text-decoration:none;
+    }
+    .logo span { color:var(--gold); }
+    nav { display:flex; gap:2.2rem; align-items:center; }
+    nav a {
+      font-family:'Cinzel', serif;
+      font-size:.72rem; font-weight:600;
+      letter-spacing:.1em; text-transform:uppercase;
+      color:var(--muted);
+      text-decoration:none;
+      position:relative;
+      transition:color .3s;
+    }
+    nav a::after {
+      content:'';
+      position:absolute; bottom:-4px; left:0;
+      width:0; height:1px;
+      background:var(--gold);
+      transition:width .35s;
+    }
+    nav a:hover,nav a.active { color:var(--gold-lt); }
+    nav a:hover::after,nav a.active::after { width:100%; }
+    .nav-cta {
+      background:rgba(201,162,76,.12);
+      border:1px solid rgba(201,162,76,.3);
+      color:var(--gold) !important;
+      padding:.42rem 1rem;
+      border-radius:.25rem;
+      transition:all .3s !important;
+    }
+    .nav-cta:hover {
+      background:rgba(201,162,76,.22) !important;
+      border-color:var(--gold) !important;
+    }
+    .nav-cta::after { display:none !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position:relative; z-index:10;
+      min-height:100vh;
+      display:grid; grid-template-rows:1fr auto;
+      padding-top:80px;
+    }
+    .hero-inner {
+      display:grid;
+      grid-template-columns:1fr 440px;
+      gap:5rem;
+      max-width:1280px;
+      margin:0 auto;
+      padding:6rem 2.5rem 4rem;
+      align-items:center;
+    }
+
+    .hero-label {
+      font-family:'JetBrains Mono', monospace;
+      font-size:.65rem; letter-spacing:.2em; text-transform:uppercase;
+      color:var(--gold);
+      display:flex; align-items:center; gap:.8rem;
+      margin-bottom:2rem;
+      opacity:0; animation:fadeUp .6s .1s ease forwards;
+    }
+    .hero-label::before { content:''; width:32px; height:1px; background:var(--gold); opacity:.5; }
+
+    .hero-h1 {
+      font-family:'Cinzel', serif;
+      font-size:clamp(2.6rem,5vw,4.2rem);
+      font-weight:900;
+      line-height:1.08;
+      letter-spacing:-.01em;
+      color:var(--cream);
+      margin-bottom:1.5rem;
+      opacity:0; animation:fadeUp .6s .2s ease forwards;
+    }
+    .hero-h1 em { font-style:italic; color:var(--gold); font-weight:400; }
+    .hero-h1 .line-terra { color:var(--gold); font-style:italic; font-weight:400; }
+
+    .hero-body {
+      color:var(--muted);
+      font-size:1.05rem; line-height:1.85;
+      font-weight:300;
+      max-width:560px;
+      margin-bottom:2.5rem;
+      opacity:0; animation:fadeUp .6s .3s ease forwards;
+    }
+
+    .hero-actions {
+      display:flex; gap:1rem; flex-wrap:wrap;
+      opacity:0; animation:fadeUp .6s .4s ease forwards;
+    }
+    .btn-primary {
+      background:linear-gradient(135deg,var(--gold-dk),var(--gold) 50%,var(--terra));
+      color:var(--bg);
+      padding:.85rem 2rem;
+      border-radius:.3rem;
+      font-family:'Cinzel', serif;
+      font-weight:700; font-size:.78rem;
+      letter-spacing:.08em; text-transform:uppercase;
+      text-decoration:none;
+      transition:all .3s;
+      box-shadow:0 8px 28px rgba(212,168,67,.25);
+      display:inline-flex; align-items:center; gap:.5rem;
+    }
+    .btn-primary:hover {
+      transform:translateY(-3px);
+      box-shadow:0 12px 36px rgba(212,168,67,.4);
+    }
+    .btn-ghost {
+      border:1px solid rgba(212,168,67,.3);
+      color:var(--gold-lt);
+      padding:.85rem 2rem;
+      border-radius:.3rem;
+      font-family:'Cinzel', serif;
+      font-weight:600; font-size:.78rem;
+      letter-spacing:.08em; text-transform:uppercase;
+      text-decoration:none;
+      transition:all .3s;
+    }
+    .btn-ghost:hover {
+      background:rgba(212,168,67,.08);
+      border-color:rgba(212,168,67,.55);
+      transform:translateY(-3px);
+    }
+
+    /* ── HERO ASIDE ── */
+    .hero-aside {
+      opacity:0; animation:fadeUp .6s .5s ease forwards;
+    }
+    .stat-card {
+      background:rgba(212,168,67,.04);
+      border:1px solid rgba(212,168,67,.12);
+      border-left:3px solid var(--gold);
+      padding:1.5rem;
+      margin-bottom:1rem;
+      transition:all .35s;
+      position:relative; overflow:hidden;
+    }
+    .stat-card::before {
+      content:'';
+      position:absolute; top:0; left:0; bottom:0; width:0;
+      background:rgba(212,168,67,.05);
+      transition:width .4s;
+    }
+    .stat-card:hover::before { width:100%; }
+    .stat-card:hover { border-left-color:var(--gold-lt); transform:translateX(6px); }
+    .stat-num {
+      font-family:'Cinzel', serif;
+      font-size:2.2rem; font-weight:900;
+      color:var(--gold);
+      line-height:1;
+      margin-bottom:.3rem;
+    }
+    .stat-label {
+      font-family:'JetBrains Mono', monospace;
+      font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--muted);
+    }
+    .stat-desc {
+      font-size:.9rem; color:rgba(245,237,218,.45);
+      margin-top:.4rem; line-height:1.5;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .hero-scroll {
+      display:flex; justify-content:center;
+      padding:2rem;
+      opacity:0; animation:fadeIn 1s 1.2s ease forwards;
+    }
+    .scroll-line {
+      width:1px; height:50px;
+      background:linear-gradient(to bottom, rgba(212,168,67,.6), transparent);
+      animation:scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { transform:scaleY(1); opacity:.6; }
+      50% { transform:scaleY(1.3); opacity:1; }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { position:relative; z-index:10; }
+    .section-inner { max-width:1280px; margin:0 auto; padding:6rem 2.5rem; }
+
+    .section-label {
+      font-family:'JetBrains Mono', monospace;
+      font-size:.62rem; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--jade);
+      display:flex; align-items:center; gap:.7rem;
+      margin-bottom:1.2rem;
+    }
+    .section-label::before { content:''; width:24px; height:1px; background:var(--jade); }
+
+    .section-title {
+      font-family:'Cinzel', serif;
+      font-size:clamp(1.8rem,4vw,3rem);
+      font-weight:900;
+      line-height:1.1;
+      color:var(--cream);
+      margin-bottom:1rem;
+    }
+    .section-title em { color:var(--gold); font-style:italic; font-weight:400; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width:1280px; margin:0 auto;
+      padding:0 2.5rem;
+      display:flex; align-items:center; gap:1.5rem;
+    }
+    .divider-line { flex:1; height:1px; background:linear-gradient(to right, transparent, rgba(212,168,67,.2), transparent); }
+    .divider-glyph { color:var(--gold); opacity:.4; font-size:.8rem; letter-spacing:.2em; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:4rem; align-items:center;
+    }
+    .about-text p {
+      color:var(--muted);
+      font-size:1.05rem; line-height:1.9;
+      margin-bottom:1.2rem;
+    }
+    .about-text p:first-of-type {
+      font-size:1.15rem; color:rgba(245,237,218,.75);
+    }
+    .about-visual {
+      position:relative;
+    }
+    .erc-badge {
+      background:rgba(61,139,122,.06);
+      border:1px solid rgba(61,139,122,.2);
+      padding:2rem;
+      text-align:center;
+      margin-bottom:1rem;
+    }
+    .erc-badge .badge-icon { font-size:3rem; margin-bottom:.8rem; display:block; }
+    .erc-badge h3 {
+      font-family:'Cinzel', serif;
+      font-size:.9rem; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--jade-lt); margin-bottom:.4rem;
+    }
+    .erc-badge p { font-size:.85rem; color:var(--muted); }
+
+    .institution-row {
+      display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;
+    }
+    .institution-tag {
+      background:rgba(212,168,67,.06);
+      border:1px solid rgba(212,168,67,.15);
+      color:var(--muted);
+      font-family:'JetBrains Mono', monospace;
+      font-size:.68rem; letter-spacing:.1em;
+      padding:.5rem 1rem;
+      text-transform:uppercase;
+    }
+
+    /* ── PILLARS ── */
+    .pillars-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;
+      margin-top:3rem;
+    }
+    .pillar {
+      background:rgba(12,10,8,.6);
+      border:1px solid rgba(212,168,67,.1);
+      padding:2.5rem 2rem;
+      position:relative; overflow:hidden;
+      transition:all .4s;
+    }
+    .pillar::after {
+      content:'';
+      position:absolute; bottom:0; left:0; right:0; height:2px;
+      background:linear-gradient(to right, var(--gold), var(--terra));
+      transform:scaleX(0); transform-origin:left;
+      transition:transform .4s;
+    }
+    .pillar:hover { background:rgba(212,168,67,.04); transform:translateY(-6px); }
+    .pillar:hover::after { transform:scaleX(1); }
+    .pillar-icon {
+      font-size:2.2rem; margin-bottom:1.2rem; display:block;
+    }
+    .pillar h3 {
+      font-family:'Cinzel', serif;
+      font-size:1rem; font-weight:700;
+      letter-spacing:.05em; text-transform:uppercase;
+      color:var(--cream); margin-bottom:.8rem;
+    }
+    .pillar p {
+      color:var(--muted);
+      font-size:.95rem; line-height:1.75;
+    }
+    .pillar-num {
+      position:absolute; top:1.5rem; right:1.5rem;
+      font-family:'Cinzel', serif;
+      font-size:3.5rem; font-weight:900;
+      color:rgba(212,168,67,.06);
+      line-height:1;
+    }
+
+    /* ── TOOL PREVIEW ── */
+    .tool-section {
+      background:rgba(17,15,12,.7);
+      border-top:1px solid rgba(212,168,67,.1);
+      border-bottom:1px solid rgba(212,168,67,.1);
+    }
+    .tool-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:5rem; align-items:center;
+    }
+    .tool-features { margin-top:2rem; }
+    .tool-feature {
+      display:flex; gap:1rem;
+      padding:1rem 0;
+      border-bottom:1px solid rgba(212,168,67,.08);
+    }
+    .tool-feature:last-child { border:none; }
+    .tf-icon {
+      width:36px; height:36px; flex-shrink:0;
+      background:rgba(61,139,122,.12);
+      border:1px solid rgba(61,139,122,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem;
+    }
+    .tf-content h4 {
+      font-family:'Cinzel', serif;
+      font-size:.78rem; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      color:var(--jade-lt); margin-bottom:.3rem;
+    }
+    .tf-content p { font-size:.9rem; color:var(--muted); line-height:1.6; }
+
+    .tool-visual {
+      position:relative;
+    }
+    .mock-terminal {
+      background:rgba(8,6,4,.9);
+      border:1px solid rgba(212,168,67,.15);
+      border-radius:.5rem;
+      overflow:hidden;
+      box-shadow:0 32px 64px rgba(0,0,0,.6);
+    }
+    .mock-terminal-bar {
+      padding:.7rem 1rem;
+      background:rgba(212,168,67,.06);
+      border-bottom:1px solid rgba(212,168,67,.1);
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .tb-dot { width:10px; height:10px; border-radius:50%; }
+    .tb-dot.red { background:var(--terra); opacity:.7; }
+    .tb-dot.yel { background:var(--gold); opacity:.7; }
+    .tb-dot.grn { background:var(--jade); opacity:.7; }
+    .mock-terminal-title {
+      font-family:'JetBrains Mono', monospace;
+      font-size:.65rem; letter-spacing:.08em;
+      color:var(--muted); margin-left:auto;
+    }
+    .mock-terminal-body {
+      padding:1.5rem;
+      font-family:'JetBrains Mono', monospace;
+      font-size:.75rem; line-height:1.9;
+    }
+    .t-comment { color:rgba(245,237,218,.25); }
+    .t-key { color:var(--gold); }
+    .t-val { color:var(--jade-lt); }
+    .t-str { color:var(--terra-lt); }
+    .t-op { color:var(--muted); }
+    .t-cursor {
+      display:inline-block; width:8px; height:1em;
+      background:var(--gold); opacity:.8;
+      animation:blink 1s ease-in-out infinite;
+      vertical-align:text-bottom;
+    }
+    @keyframes blink { 0%,100%{opacity:.8} 50%{opacity:0} }
+
+    .node-graph-mock {
+      margin-top:1.5rem;
+      background:rgba(8,6,4,.7);
+      border:1px solid rgba(212,168,67,.1);
+      border-radius:.4rem;
+      padding:1.5rem;
+      position:relative; height:180px; overflow:hidden;
+    }
+    .node-mock { position:absolute; border-radius:50%; }
+    .node-mock.gold { width:60px;height:60px;background:radial-gradient(circle,rgba(212,168,67,.4),rgba(212,168,67,.1));border:1px solid rgba(212,168,67,.5);top:50%;left:50%;transform:translate(-50%,-50%); }
+    .node-mock.jade { width:36px;height:36px;background:radial-gradient(circle,rgba(61,139,122,.4),rgba(61,139,122,.1));border:1px solid rgba(61,139,122,.4); }
+    .node-mock.terra { width:28px;height:28px;background:radial-gradient(circle,rgba(184,90,58,.4),rgba(184,90,58,.1));border:1px solid rgba(184,90,58,.4); }
+    .node-mock.n1 { top:20%;left:20%; }
+    .node-mock.n2 { top:15%;left:65%; }
+    .node-mock.n3 { top:65%;left:15%; }
+    .node-mock.n4 { top:70%;left:70%; }
+    .node-mock.n5 { top:40%;left:82%; }
+    .svg-lines { position:absolute; inset:0; width:100%; height:100%; }
+
+    /* ── TEAM PREVIEW ── */
+    .team-strip {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1.5rem; margin-top:3rem;
+    }
+    .team-mini {
+      border:1px solid rgba(212,168,67,.12);
+      border-top:3px solid;
+      padding:1.8rem 1.5rem;
+      transition:all .4s;
+      position:relative; overflow:hidden;
+    }
+    .team-mini:nth-child(1) { border-top-color:var(--gold); }
+    .team-mini:nth-child(2) { border-top-color:var(--jade); }
+    .team-mini:nth-child(3) { border-top-color:var(--terra); }
+    .team-mini:nth-child(4) { border-top-color:var(--gold-lt); }
+    .team-mini:hover { background:rgba(212,168,67,.03); transform:translateY(-6px); }
+    .tm-avatar {
+      width:60px; height:60px;
+      border-radius:50%;
+      background:linear-gradient(135deg,rgba(212,168,67,.2),rgba(61,139,122,.1));
+      border:1px solid rgba(212,168,67,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.6rem; margin-bottom:1rem;
+    }
+    .tm-name {
+      font-family:'Cinzel', serif;
+      font-size:.9rem; font-weight:700;
+      color:var(--cream); margin-bottom:.3rem; line-height:1.3;
+    }
+    .tm-role {
+      font-family:'JetBrains Mono', monospace;
+      font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    /* ── PUBLICATIONS / TIMELINE ── */
+    .timeline { margin-top:3rem; position:relative; }
+    .timeline::before {
+      content:'';
+      position:absolute; left:0; top:0; bottom:0;
+      width:1px; background:linear-gradient(to bottom,rgba(212,168,67,.3),transparent);
+    }
+    .tl-item {
+      padding:0 0 2.5rem 2.5rem;
+      position:relative;
+    }
+    .tl-item::before {
+      content:'';
+      position:absolute; left:-4px; top:6px;
+      width:9px; height:9px; border-radius:50%;
+      background:var(--gold);
+      box-shadow:0 0 10px rgba(212,168,67,.4);
+    }
+    .tl-year {
+      font-family:'JetBrains Mono', monospace;
+      font-size:.65rem; letter-spacing:.1em;
+      color:var(--gold); margin-bottom:.4rem;
+    }
+    .tl-title {
+      font-family:'Crimson Pro', serif;
+      font-size:1.05rem; font-weight:600;
+      color:var(--cream); line-height:1.5; margin-bottom:.3rem;
+    }
+    .tl-venue {
+      font-size:.85rem; color:var(--muted); font-style:italic;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      position:relative;
+      overflow:hidden;
+    }
+    .cta-inner {
+      max-width:800px; margin:0 auto;
+      padding:8rem 2.5rem;
+      text-align:center;
+    }
+    .cta-inner h2 {
+      font-family:'Cinzel', serif;
+      font-size:clamp(2rem,4vw,3.2rem);
+      font-weight:900; line-height:1.1;
+      color:var(--cream); margin-bottom:1.2rem;
+    }
+    .cta-inner p {
+      font-size:1.1rem; color:var(--muted);
+      line-height:1.8; margin-bottom:2.5rem;
+    }
+    .cta-actions { display:flex; gap:1rem; justify-content:center; }
+    .cta-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 50%, rgba(212,168,67,.05) 0%, transparent 70%);
+    }
+    .cta-lines {
+      position:absolute; inset:0;
+      background:repeating-linear-gradient(
+        90deg, transparent 0, transparent 80px,
+        rgba(212,168,67,.02) 80px, rgba(212,168,67,.02) 81px
+      ),
+      repeating-linear-gradient(
+        0deg, transparent 0, transparent 80px,
+        rgba(212,168,67,.02) 80px, rgba(212,168,67,.02) 81px
+      );
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position:relative; z-index:10;
+      background:rgba(8,6,4,.95);
+      border-top:1px solid rgba(212,168,67,.15);
+      padding:3rem 2.5rem;
+    }
+    .footer-inner {
+      max-width:1280px; margin:0 auto;
+      display:grid; grid-template-columns:1fr auto;
+      gap:2rem; align-items:center;
+    }
+    .footer-brand {
+      font-family:'Cinzel', serif;
+      font-size:1.1rem; font-weight:900;
+      color:var(--cream); margin-bottom:.4rem;
+    }
+    .footer-brand span { color:var(--gold); }
+    .footer-sub {
+      font-size:.85rem; color:var(--muted);
+    }
+    .footer-right {
+      text-align:right; font-size:.8rem; color:rgba(245,237,218,.35);
+      line-height:1.8;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity:0; }
+      to   { opacity:1; }
+    }
+
+    .rv {
+      opacity:0; transform:translateY(30px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+    .rv.visible { opacity:1; transform:translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      .hero-inner { grid-template-columns:1fr; gap:3rem; }
+      .about-grid { grid-template-columns:1fr; }
+      .pillars-grid { grid-template-columns:1fr; }
+      .tool-grid { grid-template-columns:1fr; }
+      .team-strip { grid-template-columns:repeat(2,1fr); }
+      nav { gap:1.5rem; }
+    }
+    @media (max-width:600px) {
+      .team-strip { grid-template-columns:1fr; }
+      .hero-actions { flex-direction:column; }
+      .cta-actions { flex-direction:column; align-items:center; }
+    }
+      /* ── BACK TO TOP ── */
+    .back-to-top{
+      position:fixed;bottom:2rem;right:2rem;z-index:600;
+      width:44px;height:44px;
+      background:rgba(12,10,8,.85);
+      border:1px solid rgba(201,162,76,.3);
+      color:var(--gold);
+      font-size:1.1rem;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      opacity:0;pointer-events:none;
+      transform:translateY(12px);
+      transition:opacity .35s,transform .35s,border-color .3s,background .3s;
+      backdrop-filter:blur(10px);
+      text-decoration:none;
+    }
+    .back-to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .back-to-top:hover{background:rgba(201,162,76,.12);border-color:var(--gold)}
+  </style>
+</head>
+<body>
+
+<div class="mesoamerican-top"></div>
+<div class="bg-canvas"><div class="grain"></div></div>
+
+<header>
+  <a href="index.html" class="logo"><span>Bec</span>aco</a>
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="tool.html">Tools</a>
+    <a href="team.html">Team</a>
+    <a href="research.html">Research</a>
+    <a href="contact.html" class="nav-cta">Contact →</a>
+  </nav>
+</header>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-main">
+      <div class="hero-label">ERC-Funded Research · Leiden University</div>
+      <h1 class="hero-h1">
+        Between<br>
+        <em>Canon</em><br>
+        <span class="line-terra">&amp; Coincidence</span>
+      </h1>
+      <p class="hero-body">
+        BECACO investigates the collecting histories of Indigenous Latin American material culture in European museums — bridging archival provenance research with computational knowledge graph technology to uncover hidden connections across collections.
+      </p>
+      <div class="hero-actions">
+        <a href="tool.html" class="btn-primary">Explore Our Tools →</a>
+        <a href="team.html" class="btn-ghost">Meet the Team</a>
+      </div>
+    </div>
+
+    <div class="hero-aside">
+      <div class="stat-card">
+        <div class="stat-num">CIDOC</div>
+        <div class="stat-label">CRM Knowledge Model</div>
+        <div class="stat-desc">Tabular museum data transformed into semantically-rich, interoperable knowledge graphs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">12</div>
+        <div class="stat-label">Partner Institutions</div>
+        <div class="stat-desc">European ethnographic museums contributing collection data to the shared research infrastructure</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">NLP</div>
+        <div class="stat-label">Entity Resolution Engine</div>
+        <div class="stat-desc">AI-powered matching of actors, objects, and events across disparate institutional records</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div></div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">◆ ◆ ◆</div><div class="divider-line"></div></div>
+
+<!-- ════════════════════ ABOUT ════════════════════ -->
+<section>
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text rv">
+        <div class="section-label">About the Project</div>
+        <h2 class="section-title">Provenance Research at <em>Scale</em></h2>
+        <p>BECACO (Between Canon and Coincidence) examines how Indigenous Latin American objects came to reside in European museum collections through centuries of acquisition, exchange, and colonial encounter.</p>
+        <p>Our interdisciplinary team combines expertise in archaeology, museum studies, and computer science to build new digital infrastructures for collaborative provenance research — making hidden collection histories legible across institutional boundaries.</p>
+        <p>By transforming fragmented archival data into interconnected knowledge graphs, BECACO enables researchers to trace provenance chains, identify shared actors, and discover patterns invisible to traditional methods.</p>
+      </div>
+      <div class="about-visual rv" style="transition-delay:.15s">
+        <div class="erc-badge">
+          <span class="badge-icon">🏛️</span>
+          <h3>European Research Council</h3>
+          <p>Funded under the ERC Starting Grant programme · Horizon Europe</p>
+        </div>
+        <div class="erc-badge" style="border-color:rgba(212,168,67,.2);background:rgba(212,168,67,.04);">
+          <span class="badge-icon">🎓</span>
+          <h3>Leiden University</h3>
+          <p>Faculty of Archaeology · Museums, Collections &amp; Society Group</p>
+        </div>
+        <div class="institution-row">
+          <span class="institution-tag">Ethnographic Museums</span>
+          <span class="institution-tag">Digital Humanities</span>
+          <span class="institution-tag">Semantic Web</span>
+          <span class="institution-tag">CIDOC CRM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">◆ ◆ ◆</div><div class="divider-line"></div></div>
+
+<!-- ════════════════════ INTERACTIVE MAP ════════════════════ -->
+<section style="position:relative;z-index:10;padding:5rem 0 0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+
+  <!-- ── MAP WRAPPER ── -->
+  <div id="beca-map-wrap" class="rv" style="position:relative;width:100%;height:640px;overflow:hidden;border-top:1px solid rgba(212,168,67,.15);border-bottom:1px solid rgba(212,168,67,.15);transition-delay:.1s">
+
+    <!-- The map itself -->
+    <div id="beca-map" style="position:absolute;inset:0;z-index:1;opacity:0;transition:opacity 1.4s ease"></div>
+
+    <!-- ── INTRO OVERLAY ── -->
+    <div id="beca-intro" style="
+      position:absolute;inset:0;z-index:50;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      background:rgba(8,6,4,.92);
+      backdrop-filter:blur(4px);
+      text-align:center;padding:2.5rem;
+      transition:opacity 1.2s ease;
+    ">
+      <!-- Section label — same style as the rest of the site -->
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--jade);display:inline-flex;align-items:center;gap:.7rem;margin-bottom:1.2rem">
+        <span style="display:block;width:24px;height:1px;background:var(--jade)"></span>
+        Interactive Map
+        <span style="display:block;width:24px;height:1px;background:var(--jade)"></span>
+      </div>
+
+      <!-- Main title — same Cinzel style as section titles -->
+      <h2 style="font-family:'Cinzel',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:.8rem">
+        From Latin America<br><em style="color:var(--gold);font-weight:400">to European Collections</em>
+      </h2>
+
+      <!-- Subtitle — same body text style -->
+      <p style="color:var(--muted);font-size:1rem;line-height:1.85;max-width:600px;margin-bottom:2rem">
+        Follow the journey of objects from their origins in Latin America through the networks of dealers, collectors, and scholars that brought them into European museum collections between 1850 and 2000 — a 6-phase animated journey across 26 countries and 10 partner institutions.
+      </p>
+
+      <!-- Two-column info row -->
+      <div style="display:flex;gap:2.5rem;margin-bottom:2rem;flex-wrap:wrap;justify-content:center">
+        <div style="text-align:left;background:rgba(212,168,67,.05);border:1px solid rgba(212,168,67,.15);border-left:2px solid var(--gold);padding:.8rem 1.2rem">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.45rem">🌎 Origins</div>
+          <div style="font-size:.82rem;color:var(--muted);line-height:1.75">Mexico · Guatemala · Colombia<br>Peru · Brazil · Argentina · Chile<br>+ 20 more countries</div>
+        </div>
+        <div style="text-align:left;background:rgba(61,139,122,.05);border:1px solid rgba(61,139,122,.2);border-left:2px solid var(--jade);padding:.8rem 1.2rem">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--jade-lt);margin-bottom:.45rem">🏛 Partner Museums</div>
+          <div style="font-size:.82rem;color:var(--muted);line-height:1.75">British Museum · Quai Branly<br>Humboldt Forum · Weltmuseum<br>+ 6 more institutions</div>
+        </div>
+      </div>
+
+      <button id="beca-start-btn" style="
+        background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+        color:var(--bg);padding:.85rem 2.2rem;
+        font-family:'Cinzel',serif;font-weight:700;font-size:.8rem;
+        letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;
+        box-shadow:0 6px 24px rgba(212,168,67,.35);transition:all .3s
+      " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 32px rgba(212,168,67,.45)'"
+         onmouseout="this.style.transform='';this.style.boxShadow='0 6px 24px rgba(212,168,67,.35)'">
+        ▶ &nbsp; Start Presentation
+      </button>
+    </div>
+
+    <!-- ── TOP BAR ── -->
+    <div id="beca-topbar" style="
+      position:absolute;top:0;left:0;right:0;height:44px;z-index:20;
+      background:rgba(12,10,8,.88);border-bottom:1px solid rgba(212,168,67,.2);
+      display:none;align-items:center;justify-content:space-between;
+      padding:0 1rem;backdrop-filter:blur(10px);
+    ">
+      <div style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.08em;color:var(--cream)">
+        <span style="color:var(--gold)">Bec</span>aco · Provenance Map
+      </div>
+
+      <div id="beca-phase-label" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-style:italic"></div>
+    </div>
+
+    <!-- ── PHASE STEPS ── -->
+    <div id="beca-phases" style="
+      position:absolute;top:52px;left:50%;transform:translateX(-50%);
+      display:none;gap:0;z-index:20;
+      border:1px solid rgba(212,168,67,.2);overflow:hidden;
+      box-shadow:0 4px 16px rgba(0,0,0,.4);
+    ">
+      <div class="beca-ph" id="beca-ph0" onclick="becaGoPhase(0)">1 · Overview</div>
+      <div class="beca-ph" id="beca-ph1" onclick="becaGoPhase(1)">2 · Origins</div>
+      <div class="beca-ph" id="beca-ph2" onclick="becaGoPhase(2)">3 · Museums</div>
+      <div class="beca-ph" id="beca-ph3" onclick="becaGoPhase(3)">4 · Atlantic</div>
+      <div class="beca-ph" id="beca-ph4" onclick="becaGoPhase(4)">5 · Transfers</div>
+      <div class="beca-ph" id="beca-ph5" onclick="becaGoPhase(5)">6 · Network</div>
+    </div>
+
+    <!-- ── INFO CARD — anchored top-left, never covers map content ── -->
+    <div id="beca-card" style="
+      position:absolute;top:52px;left:12px;
+      background:rgba(12,10,8,.95);
+      border:1px solid rgba(212,168,67,.25);border-left:2px solid rgba(212,168,67,.6);
+      padding:.8rem 1.2rem;text-align:left;min-width:200px;max-width:260px;
+      opacity:0;transition:all .45s cubic-bezier(.34,1.2,.64,1);
+      z-index:20;pointer-events:none;
+      box-shadow:0 8px 32px rgba(0,0,0,.6);
+      transform:translateX(-8px);
+    ">
+      <div id="beca-card-badge" style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(212,168,67,.3);display:inline-block;padding:.1rem .5rem;margin-bottom:.35rem"></div>
+      <div id="beca-card-title" style="font-family:'Cinzel',serif;font-size:.95rem;font-weight:900;color:var(--cream);margin-bottom:.2rem;line-height:1.25"></div>
+      <div id="beca-card-sub" style="font-size:.75rem;color:var(--muted);font-style:italic;line-height:1.5"></div>
+    </div>
+
+    <!-- ── LEGEND — top-right below controls ── -->
+    <div id="beca-legend" style="
+      position:absolute;top:180px;right:12px;
+      background:rgba(12,10,8,.92);border:1px solid rgba(212,168,67,.2);
+      padding:.7rem .9rem;font-size:.7rem;color:var(--muted);
+      z-index:20;display:none;
+      box-shadow:0 4px 16px rgba(0,0,0,.4);line-height:2;max-width:190px;
+    ">
+      <div id="beca-legend-title" style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;font-weight:bold"></div>
+      <div id="beca-legend-body"></div>
+    </div>
+
+    <!-- ── VOICEOVER — shown below top bar on phase 5 finale ── -->
+    <div id="beca-voice" style="
+      position:absolute;bottom:16px;left:12px;right:12px;
+      font-size:.8rem;font-style:italic;color:var(--cream);
+      text-align:center;
+      padding:.7rem 1.4rem;
+      background:rgba(12,10,8,.92);border:1px solid rgba(212,168,67,.2);
+      border-left:2px solid var(--gold);
+      box-shadow:0 4px 18px rgba(0,0,0,.4);
+      opacity:0;transition:opacity 1.8s ease;z-index:20;pointer-events:none;line-height:1.65;
+      display:none;
+    "></div>
+
+    <!-- ── PROGRESS DOTS ── -->
+    <div id="beca-dots" style="
+      position:absolute;bottom:68px;left:50%;transform:translateX(-50%);
+      display:none;gap:8px;z-index:21;
+    "></div>
+
+    <!-- ── CONTROLS ── -->
+    <div id="beca-controls" style="
+      position:absolute;top:52px;right:12px;
+      display:none;flex-direction:column;gap:5px;z-index:20;
+    ">
+      <button class="beca-cbtn" id="beca-pause" onclick="becaTogglePause()">⏸</button>
+      <button class="beca-cbtn" onclick="becaNav(-1)">◀</button>
+      <button class="beca-cbtn" onclick="becaNav(1)">▶</button>
+      <button class="beca-cbtn" onclick="becaRestart()" style="font-size:.75rem">↺</button>
+
+    </div>
+
+  </div><!-- /beca-map-wrap -->
+</section>
+
+<!-- Leaflet JS + Map logic (scoped with beca_ prefix) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  /* Phase step pills */
+  .beca-ph{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:.4rem .75rem;cursor:pointer;
+    background:rgba(12,10,8,.9);color:var(--muted);
+    border-right:1px solid rgba(212,168,67,.15);
+    transition:all .3s;white-space:nowrap;
+  }
+  .beca-ph:last-child{border-right:none}
+  .beca-ph:hover{color:var(--cream);background:rgba(212,168,67,.1)}
+  .beca-ph.active{background:rgba(212,168,67,.18);color:var(--gold-lt)}
+  .beca-ph.done{background:rgba(212,168,67,.07);color:rgba(212,168,67,.6)}
+
+  /* Control buttons */
+  .beca-cbtn{
+    width:34px;height:34px;
+    background:rgba(12,10,8,.88);border:1px solid rgba(212,168,67,.25);
+    color:var(--gold);font-size:.9rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.3);
+  }
+  .beca-cbtn:hover{background:rgba(212,168,67,.15);border-color:rgba(212,168,67,.5)}
+
+  /* Dark map tiles via CSS filter */
+  #beca-map .leaflet-tile-pane{filter:invert(1) hue-rotate(200deg) brightness(.85) contrast(1.1) saturate(.7)}
+  #beca-map .leaflet-container{background:#0c0a08 !important}
+
+  /* Markers */
+  .bk-sa-act{width:13px!important;height:13px!important;border-radius:50%;background:#c0392b;border:2px solid rgba(245,237,218,.8);box-shadow:0 0 0 3px rgba(192,57,43,.3),0 2px 8px rgba(192,57,43,.5);animation:bk-psa 1.8s ease-out infinite}
+  .bk-sa-done{width:9px!important;height:9px!important;border-radius:50%;background:rgba(192,57,43,.7);border:1.5px solid rgba(245,237,218,.5);box-shadow:0 1px 4px rgba(0,0,0,.4)}
+  .bk-eu-act{width:15px!important;height:15px!important;border-radius:50%;background:var(--gold);border:2.5px solid rgba(245,237,218,.9);box-shadow:0 0 0 3px rgba(212,168,67,.3),0 2px 8px rgba(212,168,67,.5);animation:bk-peu 1.8s ease-out infinite}
+  .bk-eu-done{width:11px!important;height:11px!important;border-radius:50%;background:rgba(212,168,67,.75);border:2px solid rgba(245,237,218,.5);box-shadow:0 1px 5px rgba(0,0,0,.4)}
+  @keyframes bk-psa{0%{box-shadow:0 0 0 0 rgba(192,57,43,.7)}70%{box-shadow:0 0 0 10px rgba(192,57,43,0)}}
+  @keyframes bk-peu{0%{box-shadow:0 0 0 0 rgba(212,168,67,.7)}70%{box-shadow:0 0 0 10px rgba(212,168,67,0)}}
+
+  /* Museum tooltip labels */
+  .bk-eu-label{
+    background:rgba(12,10,8,.92)!important;
+    border:1px solid rgba(212,168,67,.4)!important;
+    border-radius:3px!important;padding:3px 7px!important;
+    font-family:'JetBrains Mono',monospace!important;
+    font-size:9.5px!important;color:var(--gold-lt)!important;
+    white-space:nowrap!important;pointer-events:none!important;
+    box-shadow:0 2px 8px rgba(0,0,0,.5)!important;
+    letter-spacing:.04em!important;line-height:1.5!important;
+  }
+  .bk-eu-label::before{display:none!important}
+
+  /* Legend rows */
+  .bk-leg-row{display:flex;align-items:center;gap:8px;margin-bottom:.1rem;font-size:.72rem;color:var(--muted)}
+  .bk-leg-dot{width:10px;height:10px;border-radius:50%;border:2px solid rgba(245,237,218,.3);box-shadow:0 1px 3px rgba(0,0,0,.4);flex-shrink:0}
+  .bk-leg-line{width:20px;height:2px;flex-shrink:0;border-radius:2px}
+  .bk-leg-dash{width:20px;height:0;border-top:2px dashed;flex-shrink:0}
+  </style>
+<script>
+(function(){
+
+// Audio removed — silent presentation mode
+function snd() {}  // no-op stub so all snd() calls are harmless
+// ── DATA ──────────────────────────────────────────────────
+const LA = [
+  {name:"Mexico",lat:23.63,lng:-102.55},{name:"Guatemala",lat:15.78,lng:-90.23},
+  {name:"Belize",lat:17.19,lng:-88.50},{name:"Honduras",lat:15.20,lng:-86.24},
+  {name:"El Salvador",lat:13.79,lng:-88.90},{name:"Nicaragua",lat:12.87,lng:-85.21},
+  {name:"Costa Rica",lat:9.75,lng:-83.75},{name:"Panama",lat:8.54,lng:-80.78},
+  {name:"Cuba",lat:21.52,lng:-77.78},{name:"Haiti",lat:18.97,lng:-72.29},
+  {name:"Dominican Republic",lat:18.74,lng:-70.16},{name:"Jamaica",lat:18.11,lng:-77.30},
+  {name:"Puerto Rico",lat:18.22,lng:-66.59},{name:"Colombia",lat:4.57,lng:-74.30},
+  {name:"Venezuela",lat:6.42,lng:-66.59},{name:"Guyana",lat:4.86,lng:-58.93},
+  {name:"Suriname",lat:3.92,lng:-56.03},{name:"French Guiana",lat:3.93,lng:-53.13},
+  {name:"Ecuador",lat:-1.83,lng:-78.18},{name:"Peru",lat:-9.19,lng:-75.02},
+  {name:"Brazil",lat:-14.24,lng:-51.93},{name:"Bolivia",lat:-16.29,lng:-63.59},
+  {name:"Paraguay",lat:-23.44,lng:-58.44},{name:"Uruguay",lat:-32.52,lng:-55.77},
+  {name:"Argentina",lat:-38.42,lng:-63.62},{name:"Chile",lat:-35.68,lng:-71.54},
+];
+const EU = [
+  {id:0,name:"British Museum",         loc:"London, UK",              label:"British Museum\nLondon, UK",             lat:51.519, lng:-0.126,  dir:'right'},
+  {id:1,name:"Musée du Quai Branly",   loc:"Paris, France",           label:"Musée du Quai Branly\nParis, France",    lat:48.861, lng:2.298,   dir:'right'},
+  {id:2,name:"Museum der Kulturen",    loc:"Basel, Switzerland",      label:"Museum der Kulturen\nBasel, Switzerland",lat:47.559, lng:7.589,   dir:'right'},
+  {id:3,name:"Museo delle Culture",    loc:"Milan, Italy",            label:"Museo delle Culture\nMilan, Italy",      lat:45.452, lng:9.162,   dir:'right'},
+  {id:4,name:"Weltmuseum",             loc:"Vienna, Austria",         label:"Weltmuseum\nVienna, Austria",            lat:48.205, lng:16.364,  dir:'right'},
+  {id:5,name:"Néprajzi Múzeum",        loc:"Budapest, Hungary",       label:"Néprajzi Múzeum\nBudapest, Hungary",     lat:47.508, lng:19.048,  dir:'right'},
+  {id:6,name:"Ethnologisches Museum",  loc:"Berlin, Germany",         label:"Ethnologisches Museum\nBerlin, Germany", lat:52.518, lng:13.403,  dir:'right'},
+  {id:7,name:"Wereldmuseum",           loc:"Leiden / Amsterdam / NL", label:"Wereldmuseum\nLeiden · NL",              lat:52.160, lng:4.497,   dir:'left' },
+  {id:8,name:"World Cultures Museum",  loc:"Gothenburg, Sweden",      label:"World Cultures Museum\nGothenburg, SE",  lat:57.690, lng:11.987,  dir:'left' },
+  {id:9,name:"Museum of Ethnology",    loc:"Stockholm, Sweden",       label:"Museum of Ethnology\nStockholm, SE",     lat:59.334, lng:18.098,  dir:'left' },
+];
+const TRANSFERS = [
+  [0,1],[0,6],[0,7],[1,2],[1,3],[1,7],[6,4],[6,5],[6,7],
+  [7,8],[7,9],[7,2],[4,5],[4,3],[2,3],[8,6],[9,6],[5,4],[1,6],[3,4],[8,9],[0,4],
+];
+const RESEARCHERS = [
+  {name:"Frederick Starr",          from:0,to:7,field:"Mesoamerican ethnography"},
+  {name:"Eduardo Leroux",           from:1,to:3,field:"South American collections"},
+  {name:"James Cook",               from:0,to:8,field:"Pacific & Americas objects"},
+  {name:"Alfred Métraux",           from:1,to:2,field:"Gran Chaco & Andean cultures"},
+  {name:"Philip L. Dade",           from:6,to:0,field:"Central American artefacts"},
+  {name:"Jean Louis Christinat",    from:2,to:1,field:"Swiss–Latin America networks"},
+  {name:"Frau Mayer",               from:4,to:6,field:"Austro-German collections"},
+  {name:"Marianne Huber",           from:2,to:4,field:"Andean textile provenance"},
+  {name:"Frank Hamilton Cushing",   from:0,to:7,field:"Pre-Columbian Southwest/Meso."},
+  {name:"Eduard Gaffron",           from:6,to:4,field:"Peruvian archaeological objects"},
+  {name:"Alfred Klinkmüller",       from:6,to:5,field:"South American material culture"},
+  {name:"Paul Staudinger",          from:6,to:7,field:"Collecting & exchange networks"},
+  {name:"Wilhelm Bauer",            from:4,to:2,field:"Viennese exchange routes"},
+  {name:"Emile Deletaille",         from:1,to:3,field:"Belgian–French art market"},
+  {name:"Unknown Actor",            from:7,to:6,field:"Untraced object transfer"},
+  {name:"Carl Edward Ulff",         from:8,to:9,field:"Gothenburg ↔ Stockholm exchange"},
+  {name:"Guillermo Schmidt Pizarro",from:5,to:4,field:"South American–European links"},
+];
+
+// ── MAP INIT ─────────────────────────────────────────────
+const map = L.map('beca-map',{zoomControl:false,attributionControl:false,zoomSnap:.25,zoomDelta:.5}).setView([20,-30],3);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+L.control.attribution({position:'bottomleft',prefix:''}).addAttribution('© <a href="https://openstreetmap.org" style="color:rgba(212,168,67,.5)">OpenStreetMap</a>').addTo(map);
+
+// ── STATE ────────────────────────────────────────────────
+let phase=-1, paused=false, timer=null;
+const PHASE_DUR=4600;
+const mkLA={}, mkEU=[];
+const arcAtlantic=[], arcTransfer=[], arcResearch=[], labResearch=[];
+
+// ── ICONS ────────────────────────────────────────────────
+const iLA_a  =()=>L.divIcon({className:'bk-sa-act',  iconSize:[13,13],iconAnchor:[6.5,6.5]});
+const iLA_d  =()=>L.divIcon({className:'bk-sa-done', iconSize:[9,9],  iconAnchor:[4.5,4.5]});
+const iEU_a  =()=>L.divIcon({className:'bk-eu-act',  iconSize:[15,15],iconAnchor:[7.5,7.5]});
+const iEU_d  =()=>L.divIcon({className:'bk-eu-done', iconSize:[11,11],iconAnchor:[5.5,5.5]});
+
+// ── HELPERS ──────────────────────────────────────────────
+function arc(flat,flng,tlat,tlng,n,bow){
+  const pts=[];
+  for(let i=0;i<=n;i++){const t=i/n;pts.push([flat+(tlat-flat)*t+Math.sin(Math.PI*t)*bow,flng+(tlng-flng)*t]);}
+  return pts;
+}
+function head(tip,prev,col,store){
+  const tP=map.latLngToLayerPoint(L.latLng(tip)),pP=map.latLngToLayerPoint(L.latLng(prev));
+  const a=Math.atan2(tP.y-pP.y,tP.x-pP.x),s=7;
+  const l=map.layerPointToLatLng(L.point(tP.x-s*Math.cos(a-.5),tP.y-s*Math.sin(a-.5)));
+  const r=map.layerPointToLatLng(L.point(tP.x-s*Math.cos(a+.5),tP.y-s*Math.sin(a+.5)));
+  const h=L.polyline([l,L.latLng(tip),r],{color:col,weight:2,opacity:1}).addTo(map);
+  if(store)store.push(h);
+}
+function clr(arr){arr.forEach(l=>map.removeLayer(l));arr.length=0;}
+function plLA(active){
+  LA.forEach(c=>{
+    if(!mkLA[c.name])mkLA[c.name]=L.marker([c.lat,c.lng],{icon:active?iLA_a():iLA_d(),zIndexOffset:500}).addTo(map);
+    else mkLA[c.name].setIcon(active?iLA_a():iLA_d());
+  });
+}
+function plEU(active){
+  EU.forEach((m,i)=>{
+    if(!mkEU[i]){
+      const mk=L.marker([m.lat,m.lng],{icon:active?iEU_a():iEU_d(),zIndexOffset:700}).addTo(map);
+      mk.bindTooltip(m.label.replace(/\n/g,'<br>'),{permanent:true,direction:m.dir||'right',offset:m.dir==='left'?[-12,0]:[12,0],className:'bk-eu-label',opacity:1}).openTooltip();
+      mkEU[i]=mk;
+    } else mkEU[i].setIcon(active?iEU_a():iEU_d());
+  });
+}
+
+// ── UI HELPERS ───────────────────────────────────────────
+function showEl(id,flex){const el=document.getElementById(id);el.style.display=flex?'flex':'block';}
+function card(badge,title,sub){
+  const c=document.getElementById('beca-card');
+  c.style.opacity='0';c.style.transform='translateX(-8px)';
+  setTimeout(()=>{
+    document.getElementById('beca-card-badge').textContent=badge;
+    document.getElementById('beca-card-title').textContent=title;
+    document.getElementById('beca-card-sub').textContent=sub;
+    c.style.opacity='1';c.style.transform='translateX(0)';
+  },180);
+}
+function legend(title,rows){
+  document.getElementById('beca-legend-title').textContent=title;
+  document.getElementById('beca-legend-body').innerHTML=rows.map(r=>`<div class="bk-leg-row">${r}</div>`).join('');
+  showEl('beca-legend');
+}
+function stepBar(idx){
+  for(let i=0;i<6;i++){
+    const el=document.getElementById(`beca-ph${i}`);
+    el.className='beca-ph'+(i===idx?' active':i<idx?' done':'');
+  }
+  document.getElementById('beca-phase-label').textContent=['Global overview','Origins','Partner museums','Atlantic flows','Object transfers','Research network'][idx];
+}
+function dots(idx){
+  const wrap=document.getElementById('beca-dots');
+  if(!wrap.children.length){for(let i=0;i<6;i++){const d=document.createElement('div');d.style.cssText='width:7px;height:7px;border-radius:50%;background:rgba(212,168,67,.15);border:1px solid rgba(212,168,67,.3);cursor:pointer;transition:all .4s;';d.onclick=()=>becaGoPhase(i);wrap.appendChild(d);}}
+  Array.from(wrap.children).forEach((d,i)=>{
+    d.style.background=i<idx?'rgba(212,168,67,.4)':i===idx?'var(--gold)':'rgba(212,168,67,.15)';
+    d.style.transform=i===idx?'scale(1.45)':'';
+    d.style.boxShadow=i===idx?'0 0 8px rgba(212,168,67,.5)':'';
+  });
+}
+function next(){if(timer)clearTimeout(timer);if(!paused)timer=setTimeout(()=>{if(phase<5)becaGoPhase(phase+1);},PHASE_DUR);}
+
+// ── DRAW ATLANTIC ────────────────────────────────────────
+function drawAtlantic(cb){
+  const N=50,S=14;
+  const arcs=[];
+  LA.forEach(c=>EU.forEach(m=>arcs.push(arc(c.lat,c.lng,m.lat,m.lng,N,7))));
+  const polys=arcs.map(()=>L.polyline([],{color:'rgba(192,57,43,.18)',weight:1.3,opacity:0,dashArray:'6,5',lineCap:'round'}).addTo(map));
+  polys.forEach(p=>arcAtlantic.push(p));
+  let s=0;
+  (function tick(){
+    if(s<=N){polys.forEach((p,i)=>{p.setLatLngs(arcs[i].slice(0,s+1));p.setStyle({opacity:Math.min(1,s/10)});});s++;setTimeout(tick,S);}
+    else{polys.forEach((p,i)=>head(arcs[i][N],arcs[i][N-2],'rgba(192,57,43,.45)',arcAtlantic));if(cb)cb();}
+  })();
+}
+
+// ── DRAW TRANSFERS ───────────────────────────────────────
+function drawTransfers(cb){
+  const N=30,S=20;
+  const arcs=TRANSFERS.map(([f,t])=>arc(EU[f].lat,EU[f].lng,EU[t].lat,EU[t].lng,N,2.5));
+  const polys=arcs.map(()=>L.polyline([],{color:'rgba(212,168,67,0)',weight:0,opacity:0,lineCap:'round'}).addTo(map));
+  polys.forEach(p=>arcTransfer.push(p));
+  let done=0;
+  polys.forEach((poly,idx)=>{
+    setTimeout(()=>{
+      let s=0;
+      (function tick(){
+        if(s<=N){
+          poly.setLatLngs(arcs[idx].slice(0,s+1));
+          poly.setStyle({color:`rgba(212,168,67,${.45+Math.sin(s/N*Math.PI)*.3})`,opacity:Math.min(1,s/6),weight:2+Math.sin(s/N*Math.PI)*1.5});
+          s++;setTimeout(tick,S);
+        } else {
+          head(arcs[idx][N],arcs[idx][N-2],'rgba(212,168,67,.8)',arcTransfer);
+          if(++done===polys.length&&cb)cb();
+        }
+      })();
+    },idx*100);
+  });
+}
+
+// ── DRAW RESEARCHER NET ──────────────────────────────────
+function drawResearch(cb){
+  // Curated professional palette — 17 distinct, harmonious colours
+  // Designed for dark background: vivid but not garish, clearly distinguishable
+  const PAL=[
+    '99,179,237',   // sky blue
+    '246,173,85',   // amber
+    '104,211,145',  // mint green
+    '252,129,129',  // coral red
+    '159,122,234',  // soft violet
+    '72,199,142',   // emerald
+    '246,114,128',  // rose
+    '66,153,225',   // bright blue
+    '237,137,54',   // orange
+    '129,230,217',  // teal
+    '214,158,46',   // gold
+    '118,169,250',  // periwinkle
+    '252,196,25',   // yellow
+    '196,127,245',  // lavender
+    '72,187,120',   // green
+    '237,100,166',  // pink
+    '91,192,235',   // cerulean
+  ];
+  let done=0;
+  RESEARCHERS.forEach((r,idx)=>{
+    setTimeout(()=>{
+      const f=EU[r.from],t=EU[r.to];
+      const rgb=PAL[idx%PAL.length];
+      // Vary bow direction AND magnitude for visual separation
+      const bowSigns=[1,-1,1.4,-1.4,.8,-1.8,1.2,-1.2,1.6,-1.6,.6,-2,1.8,-0.7,2.2,-0.9,1.1];
+      const bowMag=bowSigns[idx%bowSigns.length]*4.5;
+      const pts=arc(f.lat,f.lng,t.lat,t.lng,30,bowMag);
+      const line=L.polyline([],{color:`rgba(${rgb},0)`,weight:2.5,opacity:0,dashArray:'6,4',lineCap:'round'}).addTo(map);
+      arcResearch.push(line);
+      let s=0;
+      (function tick(){
+        if(s<=30){
+          line.setLatLngs(pts.slice(0,s+1));
+          line.setStyle({color:`rgba(${rgb},${Math.min(.85,s/30*.85)})`,opacity:Math.min(1,s/5),weight:2.5});
+          s++;setTimeout(tick,16);
+        } else {
+          // Label — clean, readable, anchored to mid arc
+          const mid=pts[15];
+          const unk=r.name==='Unknown Actor';
+          const lbl=L.marker(mid,{
+            icon:L.divIcon({
+              className:'',
+              html:`<div style="
+                background:rgba(8,6,4,.95);
+                border:1.5px solid rgba(${rgb},.7);
+                border-radius:4px;
+                padding:3px 8px 3px 6px;
+                font-family:'JetBrains Mono',monospace;
+                font-size:9px;
+                color:#e8dcc8;
+                white-space:nowrap;
+                box-shadow:0 2px 12px rgba(0,0,0,.6);
+                display:flex;align-items:center;gap:5px;
+                ${unk?'border-style:dashed;opacity:.7;':''}
+              ">
+                <span style="
+                  width:7px;height:7px;border-radius:50%;
+                  background:rgba(${rgb},1);
+                  flex-shrink:0;display:inline-block;
+                  box-shadow:0 0 5px rgba(${rgb},.6);
+                "></span>
+                <span>
+                  <b style="color:rgba(${rgb},1);font-size:9.5px;letter-spacing:.01em">${r.name}</b>
+                  <span style="color:rgba(220,205,185,.5);font-size:8px;margin-left:3px;font-style:italic">${r.field}</span>
+                </span>
+              </div>`,
+              iconAnchor:[0, 8]   // anchor at left-centre so label never floats off-screen
+            }),
+            zIndexOffset:1200+idx,
+            interactive:false
+          }).addTo(map);
+          labResearch.push(lbl);
+          if(++done===RESEARCHERS.length&&cb)cb();
+        }
+      })();
+    },idx*220);
+  });
+}
+
+// ── PHASES ───────────────────────────────────────────────
+window.becaGoPhase=function(idx){
+  if(idx<0||idx>5)return;
+  if(timer)clearTimeout(timer);
+  phase=idx;dots(idx);stepBar(idx);
+  document.getElementById('beca-voice').style.opacity='0';
+  document.getElementById('beca-dots').style.opacity='1';
+
+  if(idx===0){
+    clr(arcAtlantic);clr(arcTransfer);clr(arcResearch);clr(labResearch);
+    map.flyTo([10,-35],3,{animate:true,duration:1.8});
+    card('Introduction','Large-Scale Provenance Research','Objects · Institutions · Researchers');
+    legend('Legend',[`<span class="bk-leg-dot" style="background:#c0392b"></span> Origin (Latin America)`,`<span class="bk-leg-dot" style="background:var(--gold)"></span> Partner museum (Europe)`]);
+    next();
+  } else if(idx===1){
+    clr(arcAtlantic);clr(arcTransfer);clr(arcResearch);clr(labResearch);
+    map.flyTo([-5,-65],3.2,{animate:true,duration:1.8});
+    card('Phase 1','Origins — Latin America','26 source countries identified');
+    legend('Origins',[`<span class="bk-leg-dot" style="background:#c0392b"></span> Country of origin`]);
+    setTimeout(()=>{
+      plLA(true);
+    },800);
+    next();
+  } else if(idx===2){
+    clr(arcAtlantic);clr(arcTransfer);clr(arcResearch);clr(labResearch);
+    plLA(false);
+    map.flyTo([52,10],4.5,{animate:true,duration:1.8});
+    card('Phase 2','Partner Museums — Europe','10 ethnographic institutions');
+    legend('Museums',[`<span class="bk-leg-dot" style="background:var(--gold)"></span> Partner museum`]);
+    setTimeout(()=>{
+      plEU(true);
+    },900);
+    next();
+  } else if(idx===3){
+    clr(arcTransfer);clr(arcResearch);clr(labResearch);
+    map.flyTo([22,-25],2.8,{animate:true,duration:2.0});
+    plLA(true);setTimeout(()=>plEU(true),400);
+    card('Phase 3','Transatlantic Flows','Objects entering European collections');
+    legend('Flows',[`<span class="bk-leg-dot" style="background:#c0392b"></span> Origin`,`<span class="bk-leg-dot" style="background:var(--gold)"></span> Museum`,`<span style="color:var(--terra-lt);font-size:.9rem">→</span> Object flow`]);
+    setTimeout(()=>{ drawAtlantic(()=>{}); },1600);
+    next();
+  } else if(idx===4){
+    clr(arcResearch);clr(labResearch);
+    plLA(false);map.flyTo([51,10],4.8,{animate:true,duration:1.8});
+    setTimeout(()=>plEU(true),400);
+    card('Phase 4','Object Transfers in Europe','Loans & exchanges between partner institutions');
+    legend('Object Transfers',[`<span class="bk-leg-dot" style="background:var(--gold)"></span> Partner museum`,`<span class="bk-leg-line" style="background:rgba(212,168,67,.8)"></span> Object loan / exchange`]);
+    setTimeout(()=>{
+      drawTransfers(()=>{});
+    },1400);
+    next();
+  } else if(idx===5){
+    // Zoom tighter on Europe so researcher labels are clearly readable
+    map.flyTo([52,14],5.0,{animate:true,duration:1.6});
+    setTimeout(()=>plEU(true),300);
+    card('Phase 5','Research Network','Scholars collaborating across institutions');
+    legend('Networks',[
+      `<span class="bk-leg-line" style="background:rgba(212,168,67,.8)"></span> Object transfer`,
+      `<span class="bk-leg-dash" style="border-color:rgba(130,200,255,.7)"></span> Researcher link`,
+      `<span style="font-size:.8rem">●</span> Researcher + field`
+    ]);
+    setTimeout(()=>drawResearch(()=>{
+      setTimeout(()=>{
+        // Hide info card & dots; show voiceover at bottom
+        document.getElementById('beca-card').style.opacity='0';
+        document.getElementById('beca-dots').style.opacity='0';
+        const vo=document.getElementById('beca-voice');
+        vo.style.display='block';
+        vo.textContent='"Objects travelled from Latin America into European collections through a network of actors — from field collectors like Frederick Starr, to dealers such as Emile Deletaille and Eduard Gaffron, to scholars like Alfred Métraux — linking institutions from London to Stockholm, each leaving a trace for provenance research to follow."';
+        setTimeout(()=>{ vo.style.opacity='1'; },50);
+      },1400);
+    }),1400);
+    return;
+  }
+};
+
+window.becaTogglePause=function(){
+  paused=!paused;
+  document.getElementById('beca-pause').textContent=paused?'▶':'⏸';
+  if(!paused)next();else if(timer)clearTimeout(timer);
+};
+window.becaNav=function(d){const n=phase+d;if(n>=0&&n<=5)becaGoPhase(n);};
+window.becaRestart=function(){
+  if(timer)clearTimeout(timer);
+  clr(arcAtlantic);clr(arcTransfer);clr(arcResearch);clr(labResearch);
+  Object.values(mkLA).forEach(m=>map.removeLayer(m));Object.keys(mkLA).forEach(k=>delete mkLA[k]);
+  mkEU.forEach(m=>map.removeLayer(m));mkEU.length=0;
+  paused=false;document.getElementById('beca-pause').textContent='⏸';
+  document.getElementById('beca-card').style.opacity='0';
+  const vo=document.getElementById('beca-voice');
+  vo.style.opacity='0';vo.style.display='none';
+  document.getElementById('beca-dots').style.opacity='1';
+  stepBar(-1);dots(-1);
+  map.flyTo([10,-35],3,{animate:true,duration:1.2});
+  setTimeout(()=>becaGoPhase(0),1400);
+};
+
+// ── START ────────────────────────────────────────────────
+document.getElementById('beca-start-btn').addEventListener('click',function(){
+  const intro=document.getElementById('beca-intro');
+  intro.style.opacity='0';intro.style.pointerEvents='none';
+  setTimeout(()=>{
+    intro.style.display='none';
+    document.getElementById('beca-map').style.opacity='1';
+    showEl('beca-topbar',true);
+    showEl('beca-phases',true);
+    showEl('beca-controls',true);
+    document.getElementById('beca-dots').style.display='flex';
+    setTimeout(()=>becaGoPhase(0),700);
+  },1200);
+});
+
+})();
+</script>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">◆</div><div class="divider-line"></div></div>
+
+<!-- ════════════════════ PILLARS ════════════════════ -->
+<section>
+  <div class="section-inner">
+    <div class="rv">
+      <div class="section-label">Research Pillars</div>
+      <h2 class="section-title">Three Axes of Inquiry</h2>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar rv" style="transition-delay:.05s">
+        <span class="pillar-num">01</span>
+        <span class="pillar-icon">🗺️</span>
+        <h3>Collecting Histories</h3>
+        <p>Reconstructing the biographical trajectories of objects from origin communities in Latin America to European museum storerooms — mapping the human networks that enabled these transfers.</p>
+      </div>
+      <div class="pillar rv" style="transition-delay:.15s">
+        <span class="pillar-num">02</span>
+        <span class="pillar-icon">🕸️</span>
+        <h3>Knowledge Graphs</h3>
+        <p>Building CIDOC CRM-compliant graph databases that connect objects, actors, events, and places across institutional silos, enabling federated provenance queries at unprecedented scale.</p>
+      </div>
+      <div class="pillar rv" style="transition-delay:.25s">
+        <span class="pillar-num">03</span>
+        <span class="pillar-icon">🤝</span>
+        <h3>Indigenous Representation</h3>
+        <p>Centering indigenous perspectives and community voices in how provenance is understood, documented, and restituted — moving beyond purely institutional narratives of collection histories.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">◆ ◆ ◆</div><div class="divider-line"></div></div>
+
+<!-- ════════════════════ TOOLS PLATFORM PREVIEW ════════════════════ -->
+<section class="tool-section">
+  <div class="section-inner">
+    <div class="rv" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:3rem">
+      <div>
+        <div class="section-label" style="color:var(--jade)">The Platform</div>
+        <h2 class="section-title">4 Tools for<br><em>Provenance Research</em></h2>
+      </div>
+      <a href="tool.html" class="btn-ghost" style="margin-bottom:.5rem">Explore All Tools →</a>
+    </div>
+
+    <div class="rv" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;transition-delay:.1s">
+
+      <!-- BecaGraph -->
+      <div style="background:rgba(61,139,122,.04);border:1px solid rgba(61,139,122,.18);padding:2rem;transition:all .4s;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--jade),var(--gold))"></div>
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div style="width:36px;height:36px;background:rgba(61,139,122,.12);border:1px solid rgba(61,139,122,.25);display:flex;align-items:center;justify-content:center;font-size:1rem">🔗</div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.9rem;font-weight:900;color:var(--cream)">BecaGraph</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--jade-lt)">Integration Engine</div>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:.9rem;line-height:1.75">Transforms tabular museum exports (XLSX/CSV) into a CIDOC CRM knowledge graph with LLM-powered entity resolution across institutions.</p>
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(61,139,122,.2);color:rgba(61,139,122,.7)">CIDOC CRM</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(212,168,67,.15);color:rgba(212,168,67,.6)">Neo4j</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(184,90,58,.2);color:rgba(184,90,58,.7)">Entity Resolution</span>
+        </div>
+      </div>
+
+      <!-- BecaChat -->
+      <div style="background:rgba(139,92,246,.03);border:1px solid rgba(139,92,246,.15);padding:2rem;transition:all .4s;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,#8b5cf6,#06b6d4)"></div>
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div style="width:36px;height:36px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.22);display:flex;align-items:center;justify-content:center;font-size:1rem">💬</div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.9rem;font-weight:900;color:var(--cream)">BecaChat</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:#c4b5fd">Conversational AI</div>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:.9rem;line-height:1.75">Ask questions about the knowledge graph in plain language. The LLM translates your query into Cypher, runs it against Neo4j, and returns a readable answer.</p>
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(139,92,246,.2);color:rgba(167,139,250,.7)">Natural Language</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(6,182,212,.2);color:rgba(103,232,249,.7)">Live Cypher</span>
+        </div>
+      </div>
+
+      <!-- Beca Narratives -->
+      <div style="background:rgba(184,90,58,.03);border:1px solid rgba(184,90,58,.15);padding:2rem;transition:all .4s;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--terra),var(--jade))"></div>
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div style="width:36px;height:36px;background:rgba(184,90,58,.1);border:1px solid rgba(184,90,58,.22);display:flex;align-items:center;justify-content:center;font-size:1rem">◈</div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.9rem;font-weight:900;color:var(--cream)">Beca Narratives</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--terra-lt)">Object Story Weaver</div>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:.9rem;line-height:1.75">Enter an object identifier and receive a historically informed narrative generated by an LLM — with text-to-speech audio playback for museum audiences.</p>
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(184,90,58,.2);color:rgba(212,121,90,.7)">LLM Narratives</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(61,139,122,.2);color:rgba(90,171,154,.7)">Text-to-Speech</span>
+        </div>
+      </div>
+
+      <!-- Analytics Dashboard -->
+      <div style="background:rgba(6,182,212,.03);border:1px solid rgba(6,182,212,.15);padding:2rem;transition:all .4s;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,#06b6d4,#8b5cf6)"></div>
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div style="width:36px;height:36px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.22);display:flex;align-items:center;justify-content:center;font-size:1rem">📊</div>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.9rem;font-weight:900;color:var(--cream)">Analytics Dashboard</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:#67e8f9">5 + 5 Modules</div>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:.9rem;line-height:1.75">5 analytical modules (time, geography, production, acquisition,  advanced search) plus five specialised tools for provenance, actors, and data quality.</p>
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(6,182,212,.2);color:rgba(103,232,249,.7)">Interactive Charts</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(139,92,246,.2);color:rgba(196,181,253,.7)">3D Network</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">◆</div><div class="divider-line"></div></div>
+
+<!-- ════════════════════ TEAM PREVIEW ════════════════════ -->
+<section>
+  <div class="section-inner">
+    <div class="rv" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div class="section-label">The Researchers</div>
+        <h2 class="section-title">Interdisciplinary <em>Expertise</em></h2>
+      </div>
+      <a href="team.html" class="btn-ghost" style="margin-bottom:.5rem;">Full Team →</a>
+    </div>
+    <div class="team-strip">
+      <div class="team-mini rv" style="transition-delay:.05s">
+        <div class="tm-avatar">👨‍🔬</div>
+        <div class="tm-name">Martin Berger</div>
+        <div class="tm-role">Project Director</div>
+      </div>
+      <div class="team-mini rv" style="transition-delay:.1s">
+        <div class="tm-avatar">💻</div>
+        <div class="tm-name">Ishak Riali</div>
+        <div class="tm-role">Postdoctoral Researcher</div>
+      </div>
+      <div class="team-mini rv" style="transition-delay:.15s">
+        <div class="tm-avatar">🎓</div>
+        <div class="tm-name">Elizabeth Rodriguez Estrada</div>
+        <div class="tm-role">PhD Candidate</div>
+      </div>
+      <div class="team-mini rv" style="transition-delay:.2s">
+        <div class="tm-avatar">🎓</div>
+        <div class="tm-name">Gabriel Spautz Vieira</div>
+        <div class="tm-role">PhD Candidate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ CTA ════════════════════ -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-lines"></div>
+  <div class="cta-inner rv">
+    <h2>Interested in Collaborating?</h2>
+    <p>BECACO is actively seeking partner institutions and researchers working on provenance, restitution, and the digital transformation of museum collections.</p>
+    <div class="cta-actions">
+      <a href="research.html" class="btn-primary">Publications &amp; Outputs →</a>
+      <a href="research.html" class="btn-ghost">Events &amp; Programme</a>
+    </div>
+    <div style="margin-top:1.5rem">
+      <a href="mailto:m.e.berger@arch.leidenuniv.nl" style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(245,237,218,.2);padding-bottom:2px;transition:color .3s" onmouseover="this.style.color='var(--gold-lt)'" onmouseout="this.style.color=''">Contact the team →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><span>Bec</span>aco</div>
+      <div class="footer-sub">Between Canon and Coincidence · Leiden University · ERC-Funded</div>
+    </div>
+    <div class="footer-right">
+      <div>Faculty of Archaeology</div>
+      <div>Leiden University, Netherlands</div>
+      <div style="margin-top:.5rem;color:rgba(245,237,218,.2)">© 2025 BECACO</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => observer.observe(el));
+</script>
+<a href="#" class="back-to-top" id="btt" aria-label="Back to top">↑</a>
+<script>
+  // Back to top
+  const btt = document.getElementById("btt");
+  window.addEventListener("scroll", () => {
+    btt.classList.toggle("visible", window.scrollY > 400);
+  }, { passive: true });
+  btt.addEventListener("click", e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+</script>
+</body>
+</html>
