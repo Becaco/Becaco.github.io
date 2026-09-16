@@ -230,6 +230,457 @@
     }
     .back-to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
     .back-to-top:hover{background:rgba(201,162,76,.12);border-color:var(--gold)}
+  
+    
+  
+
+  
+    /* ══════════════════════════════════════════════════════════════
+       BECACO PROFESSIONAL LIGHT MODE — v3
+       Clean ivory/gold/dark-brown palette. Zero unreadable text.
+    ══════════════════════════════════════════════════════════════ */
+
+    /* ── CSS Variables ── */
+    html.light-mode {
+      --bg:       #f7f4ee;
+      --bg2:      #ede9df;
+      --bg3:      #e4dfd3;
+      --cream:    #1c150a;
+      --muted:    rgba(28,21,10,.58);
+      --gold:     #8a6b1e;
+      --gold-lt:  #6b5018;
+      --gold-dk:  #c9a24c;
+      --terra:    #8b3820;
+      --terra-lt: #a84f35;
+      --jade:     #2a6b5c;
+      --jade-lt:  #3a8a78;
+      --purple:   #6d28d9;
+      --purple-lt:#7c3aed;
+      --cyan:     #0e7490;
+      --cyan-lt:  #0891b2;
+    }
+
+    /* ── Body & Background ── */
+    html.light-mode body {
+      background: #f7f4ee;
+      color: #1c150a;
+    }
+    html.light-mode .bg-canvas { display: none; }
+    html.light-mode .grain { opacity: 0; }
+    html.light-mode .mesoamerican-top { opacity: .45; }
+
+    /* Subtle warm gradient replacing the dark radial glow */
+    html.light-mode body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 15%, rgba(138,107,30,.06) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 60% at 85% 85%, rgba(42,107,92,.04) 0%, transparent 55%);
+    }
+
+    /* ── Header ── */
+    html.light-mode header {
+      background: rgba(247,244,238,.96) !important;
+      border-bottom: 1px solid rgba(138,107,30,.2) !important;
+      box-shadow: 0 1px 20px rgba(138,107,30,.08);
+    }
+
+    /* ── Navigation ── */
+    html.light-mode nav a { color: rgba(28,21,10,.5); }
+    html.light-mode nav a:hover,
+    html.light-mode nav a.active { color: #8a6b1e; }
+    html.light-mode .nav-cta {
+      background: rgba(138,107,30,.1) !important;
+      border-color: rgba(138,107,30,.3) !important;
+      color: #8a6b1e !important;
+    }
+
+    /* ── Hero text ── */
+    html.light-mode .hero-h1 { color: #1c150a; }
+    html.light-mode .hero-body,
+    html.light-mode .hero-sub { color: rgba(28,21,10,.58); }
+    html.light-mode .hero-label { color: #8a6b1e; }
+
+    /* ── Stat cards (index sidebar) ── */
+    html.light-mode .stat-card {
+      background: rgba(138,107,30,.05);
+      border-left-color: #8a6b1e;
+      border-color: rgba(138,107,30,.15);
+    }
+    html.light-mode .stat-card:hover { border-left-color: #6b5018; }
+    html.light-mode .stat-num { color: #8a6b1e; }
+    html.light-mode .stat-label { color: rgba(28,21,10,.45); }
+
+    /* ── Dividers ── */
+    html.light-mode .divider-line {
+      background: linear-gradient(to right, transparent, rgba(138,107,30,.2), transparent);
+    }
+    html.light-mode .divider-glyph { color: rgba(138,107,30,.5); }
+
+    /* ── Section labels ── */
+    html.light-mode .section-label { color: #2a6b5c; }
+    html.light-mode .section-label::before { background: #2a6b5c; }
+    html.light-mode .sl-gold { color: #8a6b1e; }
+    html.light-mode .sl-gold::before { background: #8a6b1e; }
+    html.light-mode .sl-jade { color: #3a8a78; }
+    html.light-mode .sl-jade::before { background: #3a8a78; }
+    html.light-mode .sl-terra { color: #a84f35; }
+    html.light-mode .sl-terra::before { background: #a84f35; }
+    html.light-mode .sl-purple { color: #7c3aed; }
+    html.light-mode .sl-purple::before { background: #7c3aed; }
+    html.light-mode .sl-cyan { color: #0891b2; }
+    html.light-mode .sl-cyan::before { background: #0891b2; }
+
+    /* ── Section titles ── */
+    html.light-mode .section-title { color: #1c150a; }
+    html.light-mode .section-title em { color: #8a6b1e; }
+
+    /* ── About section ── */
+    html.light-mode .about-text p { color: rgba(28,21,10,.62); }
+    html.light-mode .about-text p:first-of-type { color: rgba(28,21,10,.8); }
+    html.light-mode .erc-badge {
+      background: rgba(42,107,92,.06);
+      border-color: rgba(42,107,92,.2);
+    }
+    html.light-mode .erc-badge h3 { color: #3a8a78; }
+    html.light-mode .erc-badge p { color: rgba(28,21,10,.55); }
+    html.light-mode .institution-tag {
+      background: rgba(138,107,30,.07);
+      border-color: rgba(138,107,30,.2);
+      color: rgba(28,21,10,.55);
+    }
+
+    /* ── Pillars (index) ── */
+    html.light-mode .pillar {
+      background: #f0ece3;
+      border-color: rgba(138,107,30,.12);
+    }
+    html.light-mode .pillar:hover { background: rgba(138,107,30,.06); }
+    html.light-mode .pillar::after { background: linear-gradient(to right, #8a6b1e, #a84f35); }
+    html.light-mode .pillar h3 { color: #1c150a; }
+    html.light-mode .pillar p { color: rgba(28,21,10,.58); }
+    html.light-mode .pillar-num { color: rgba(138,107,30,.16); }
+
+    /* ── Platform tool preview (index) ── */
+    html.light-mode .tool-section {
+      background: rgba(237,233,223,.8);
+      border-top-color: rgba(138,107,30,.1);
+      border-bottom-color: rgba(138,107,30,.1);
+    }
+
+    /* ── Tool feature blocks (tool.html) ── */
+    html.light-mode .pillars-row {
+      background: rgba(138,107,30,.08);
+      border-color: rgba(138,107,30,.08);
+    }
+    html.light-mode .pillar-col { background: #f7f4ee; }
+    html.light-mode .pillar-col:hover { background: rgba(138,107,30,.05); }
+    html.light-mode .pc-name { color: #1c150a; }
+    html.light-mode .pc-desc { color: rgba(28,21,10,.55); }
+    html.light-mode .pc-num { opacity: .1; }
+
+    html.light-mode .tool-feature {
+      border-color: rgba(138,107,30,.12);
+    }
+    html.light-mode .tool-feature:hover { border-color: rgba(138,107,30,.28); }
+    html.light-mode .tf-content { background: rgba(247,244,238,.85); }
+    html.light-mode .tf-title { color: #1c150a; }
+    html.light-mode .tf-subtitle { opacity: .85; }
+    html.light-mode .tf-body { color: rgba(28,21,10,.6); }
+    html.light-mode .tf-feat { color: rgba(28,21,10,.6); }
+    html.light-mode .tf-feat strong { color: #1c150a; }
+
+    /* ── Terminal / BecaGraph mock ── */
+    html.light-mode .tf-visual.v-becagraph { background: #ede9df; }
+    html.light-mode .terminal-mock,
+    html.light-mode .mock-terminal {
+      background: #faf9f6;
+      border-color: rgba(138,107,30,.2);
+      box-shadow: 0 16px 40px rgba(138,107,30,.12);
+    }
+    html.light-mode .term-bar {
+      background: rgba(138,107,30,.07);
+      border-bottom-color: rgba(138,107,30,.12);
+    }
+    html.light-mode .term-title { color: rgba(28,21,10,.4); }
+    html.light-mode .term-body { color: #1c150a; }
+    html.light-mode .t-cm { color: rgba(28,21,10,.3); }
+    html.light-mode .t-k { color: #7a5c14; }
+    html.light-mode .t-v { color: #2a6b5c; }
+    html.light-mode .t-s { color: #8b3820; }
+    html.light-mode .t-op { color: rgba(28,21,10,.35); }
+    html.light-mode .t-cur { background: #8a6b1e; }
+    html.light-mode .pipeline-mini .pm-step {
+      background: rgba(138,107,30,.07);
+      border-color: rgba(138,107,30,.15);
+    }
+    html.light-mode .pm-label { color: rgba(28,21,10,.5); }
+    html.light-mode .pm-step::after { color: rgba(138,107,30,.4); }
+
+    /* ── BecaChat mock ── */
+    html.light-mode .tf-visual.v-chat {
+      background: #ede9df;
+      border-left-color: rgba(109,40,217,.15);
+    }
+    html.light-mode .chat-msg { color: #1c150a; }
+    html.light-mode .chat-msg.user {
+      background: rgba(138,107,30,.1);
+      border-color: rgba(138,107,30,.22);
+    }
+    html.light-mode .chat-msg.bot {
+      background: rgba(109,40,217,.07);
+      border-color: rgba(109,40,217,.18);
+    }
+    html.light-mode .chat-label { color: #6d28d9; }
+    html.light-mode .chat-cypher {
+      background: rgba(0,0,0,.05);
+      border-color: rgba(109,40,217,.2);
+      color: #0e7490;
+    }
+    html.light-mode .cim-field {
+      background: rgba(0,0,0,.04);
+      border-color: rgba(0,0,0,.1);
+      color: rgba(28,21,10,.4);
+    }
+    html.light-mode .cim-btn {
+      background: rgba(109,40,217,.1);
+      border-color: rgba(109,40,217,.2);
+      color: #6d28d9;
+    }
+
+    /* ── Narratives mock ── */
+    html.light-mode .tf-visual.v-narr {
+      background: #ede9df;
+      border-left-color: rgba(139,56,32,.12);
+    }
+    html.light-mode .narr-id-field {
+      background: rgba(138,107,30,.06);
+      border-color: rgba(138,107,30,.18);
+      color: rgba(28,21,10,.5);
+    }
+    html.light-mode .narr-id-prefix { color: #8a6b1e; }
+    html.light-mode .narr-result {
+      background: rgba(138,107,30,.05);
+      border-color: rgba(138,107,30,.12);
+    }
+    html.light-mode .narr-result-label { color: #8a6b1e; }
+    html.light-mode .narr-text { color: rgba(28,21,10,.65); }
+    html.light-mode .tts-play {
+      background: rgba(42,107,92,.08);
+      border-color: rgba(42,107,92,.25);
+      color: #3a8a78;
+    }
+    html.light-mode .tts-stop {
+      background: rgba(139,56,32,.07);
+      border-color: rgba(139,56,32,.22);
+      color: #a84f35;
+    }
+
+    /* ── Dashboard mock ── */
+    html.light-mode .tf-visual.v-dash {
+      background: #ede9df;
+      border-left-color: rgba(14,116,144,.12);
+    }
+    html.light-mode .dash-tabs { border-bottom-color: rgba(0,0,0,.1); }
+    html.light-mode .dash-tab { color: rgba(28,21,10,.35); }
+    html.light-mode .dash-tab.active { color: #0e7490; border-bottom-color: #0e7490; }
+    html.light-mode .dash-mod {
+      background: rgba(0,0,0,.04);
+      border-color: rgba(0,0,0,.07);
+    }
+    html.light-mode .dash-mod:hover {
+      background: rgba(14,116,144,.07);
+      border-color: rgba(14,116,144,.22);
+    }
+    html.light-mode .dm-name { color: rgba(28,21,10,.55); }
+    html.light-mode .dbc-label { color: rgba(28,21,10,.38); }
+    html.light-mode .dash-bar-chart {
+      background: rgba(0,0,0,.04);
+      border-color: rgba(0,0,0,.06);
+    }
+    html.light-mode .dbc-bar { background: #0e7490; opacity: .6; }
+    html.light-mode .dbc-bar:hover { opacity: 1; }
+
+    /* ── Mini tool cards ── */
+    html.light-mode .mini-card {
+      background: #f0ece3;
+      border-color: rgba(138,107,30,.1);
+    }
+    html.light-mode .mini-card:hover {
+      background: rgba(138,107,30,.06);
+      border-color: rgba(138,107,30,.22);
+      box-shadow: 0 12px 32px rgba(138,107,30,.1);
+    }
+    html.light-mode .mc-name { color: #1c150a; }
+    html.light-mode .mc-desc { color: rgba(28,21,10,.55); }
+    html.light-mode .mc-tag { color: rgba(28,21,10,.3); border-top-color: rgba(138,107,30,.1); }
+
+    /* ── Team strip (index) ── */
+    html.light-mode .team-mini {
+      background: #f0ece3;
+      border-color: rgba(138,107,30,.1);
+    }
+    html.light-mode .team-mini:hover { background: rgba(138,107,30,.06); }
+    html.light-mode .tm-name { color: #1c150a; }
+    html.light-mode .tm-role { color: rgba(28,21,10,.5); }
+    html.light-mode .tm-avatar {
+      background: linear-gradient(135deg, rgba(138,107,30,.15), rgba(42,107,92,.1));
+      border-color: rgba(138,107,30,.2);
+    }
+
+    /* ── Team page (team.html) ── */
+    html.light-mode .profile-card,
+    html.light-mode .member-card,
+    html.light-mode .team-card-wrap {
+      background: #f0ece3;
+      border-color: rgba(138,107,30,.15);
+    }
+
+    /* ── Research / timeline ── */
+    html.light-mode .tl-item::before { background: #8a6b1e; }
+    html.light-mode .tl-year { color: #8a6b1e; }
+    html.light-mode .tl-title { color: #1c150a; }
+    html.light-mode .tl-venue { color: rgba(28,21,10,.5); }
+
+    /* ── CTA section ── */
+    html.light-mode .cta-section {
+      background: rgba(237,233,223,.8);
+      border-top-color: rgba(138,107,30,.1);
+    }
+    html.light-mode .cta-inner h2 { color: #1c150a; }
+    html.light-mode .cta-inner p { color: rgba(28,21,10,.6); }
+
+    /* ── Buttons ── */
+    html.light-mode .btn-ghost,
+    html.light-mode .btn-cta-ghost {
+      border-color: rgba(138,107,30,.35);
+      color: #8a6b1e;
+    }
+    html.light-mode .btn-ghost:hover,
+    html.light-mode .btn-cta-ghost:hover {
+      background: rgba(138,107,30,.08);
+      border-color: #8a6b1e;
+    }
+
+    /* ── Map controls ── */
+    html.light-mode #beca-topbar {
+      background: rgba(247,244,238,.95) !important;
+      border-bottom-color: rgba(138,107,30,.18) !important;
+      color: #1c150a !important;
+    }
+    html.light-mode #beca-intro {
+      background: rgba(247,244,238,.95) !important;
+    }
+    html.light-mode #beca-card {
+      background: rgba(247,244,238,.97) !important;
+      border-color: rgba(138,107,30,.25) !important;
+      border-left-color: rgba(138,107,30,.6) !important;
+    }
+    html.light-mode #beca-card-title { color: #1c150a !important; }
+    html.light-mode #beca-card-sub { color: rgba(28,21,10,.55) !important; }
+    html.light-mode #beca-card-badge { color: #8a6b1e !important; border-color: rgba(138,107,30,.3) !important; }
+    html.light-mode #beca-legend {
+      background: rgba(247,244,238,.96) !important;
+      border-color: rgba(138,107,30,.18) !important;
+      color: rgba(28,21,10,.6) !important;
+    }
+    html.light-mode #beca-legend-title { color: #8a6b1e !important; }
+    html.light-mode #beca-voice {
+      background: rgba(247,244,238,.95) !important;
+      border-color: rgba(138,107,30,.18) !important;
+      border-left-color: #8a6b1e !important;
+      color: #1c150a !important;
+    }
+    html.light-mode .beca-ph {
+      background: rgba(247,244,238,.95) !important;
+      color: rgba(28,21,10,.45) !important;
+      border-right-color: rgba(138,107,30,.12) !important;
+    }
+    html.light-mode .beca-ph:hover { color: #1c150a !important; background: rgba(138,107,30,.1) !important; }
+    html.light-mode .beca-ph.active { background: rgba(138,107,30,.15) !important; color: #8a6b1e !important; }
+    html.light-mode .beca-ph.done { color: rgba(138,107,30,.55) !important; }
+    html.light-mode .beca-cbtn {
+      background: rgba(247,244,238,.92) !important;
+      border-color: rgba(138,107,30,.22) !important;
+      color: #8a6b1e !important;
+    }
+    html.light-mode .bk-eu-label {
+      background: rgba(247,244,238,.97) !important;
+      border-color: rgba(138,107,30,.35) !important;
+      color: #6b5018 !important;
+    }
+
+    /* ── Contact form ── */
+    html.light-mode .form-group input,
+    html.light-mode .form-group textarea,
+    html.light-mode .form-group select {
+      background: #fff;
+      border-color: rgba(138,107,30,.22);
+      color: #1c150a;
+    }
+    html.light-mode .form-group label { color: rgba(28,21,10,.7); }
+    html.light-mode .form-group input:focus,
+    html.light-mode .form-group textarea:focus {
+      border-color: #8a6b1e;
+      box-shadow: 0 0 0 3px rgba(138,107,30,.1);
+    }
+
+    /* ── Footer ── */
+    html.light-mode footer {
+      background: rgba(237,233,223,.97) !important;
+      border-top-color: rgba(138,107,30,.18) !important;
+    }
+    html.light-mode .footer-brand { color: #1c150a; }
+    html.light-mode .footer-sub { color: rgba(28,21,10,.5); }
+    html.light-mode .footer-right { color: rgba(28,21,10,.35); }
+
+    /* ── Back to top ── */
+    html.light-mode .back-to-top {
+      background: rgba(247,244,238,.95) !important;
+      border-color: rgba(138,107,30,.28) !important;
+      color: #8a6b1e !important;
+    }
+    html.light-mode .back-to-top:hover { background: rgba(138,107,30,.1) !important; }
+
+    /* ── Toggle button ── */
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      background: rgba(201,162,76,.12);
+      border: 1px solid rgba(201,162,76,.32);
+      padding: .34rem .75rem;
+      cursor: pointer;
+      transition: background .25s, border-color .25s;
+      margin-left: .7rem;
+      color: var(--gold-lt);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    .theme-toggle-btn:hover {
+      background: rgba(201,162,76,.22);
+      border-color: var(--gold);
+    }
+    html.light-mode .theme-toggle-btn {
+      background: rgba(138,107,30,.1);
+      border-color: rgba(138,107,30,.3);
+      color: #8a6b1e;
+    }
+    html.light-mode .theme-toggle-btn:hover {
+      background: rgba(138,107,30,.18);
+      border-color: #8a6b1e;
+    }
+    .tog-icon { font-size: .88rem; line-height: 1; }
+
   </style>
 </head>
 <body>
@@ -244,6 +695,7 @@
     <a href="team.html">Team</a>
     <a href="research.html">Research</a>
     <a href="contact.html" class="nav-cta">Contact →</a>
+  <button class="theme-toggle-btn" id="themeToggle" title="Toggle light / dark mode"><span class="tog-icon">🌙</span><span class="tog-label">Light</span></button>
   </nav>
 </header>
 
@@ -260,7 +712,7 @@
       <div><div class="hero-stat-num" style="color:var(--gold)">4</div><div class="hero-stat-label">Tools</div></div>
       <div><div class="hero-stat-num" style="color:var(--jade-lt)">CIDOC</div><div class="hero-stat-label">CRM Standard</div></div>
       <div><div class="hero-stat-num" style="color:var(--terra-lt)">LLM</div><div class="hero-stat-label">AI Powered</div></div>
-      <div><div class="hero-stat-num" style="color:var(--purple-lt)">Neo4j</div><div class="hero-stat-label">Graph Backend</div></div>
+      <div><div class="hero-stat-num" style="color:var(--purple-lt);font-size:1.3rem">Graph DB</div><div class="hero-stat-label">SPARQL Backend</div></div>
     </div>
   </div>
 </section>
@@ -282,13 +734,13 @@
       <div class="pillar-col">
         <div class="pc-num" style="color:var(--purple)">02</div>
         <span class="pc-icon">💬</span>
-        <div class="pc-name" style="color:var(--purple-lt)">BecaChat</div>
+        <div class="pc-name" style="color:var(--purple-lt)">BecaChat <span style="font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.06em;opacity:.7;font-weight:400">[in progress]</span></div>
         <div class="pc-desc">Conversational interface to query the knowledge graph in plain language — no Cypher expertise required.</div>
       </div>
       <div class="pillar-col">
         <div class="pc-num" style="color:var(--terra)">03</div>
         <span class="pc-icon">◈</span>
-        <div class="pc-name" style="color:var(--terra-lt)">Beca Narratives</div>
+        <div class="pc-name" style="color:var(--terra-lt)">Beca Narratives <span style="font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.06em;opacity:.7;font-weight:400">[in progress]</span></div>
         <div class="pc-desc">Generates historically informed narratives from graph data — with text-to-speech audio playback for museum audiences.</div>
       </div>
       <div class="pillar-col">
@@ -316,11 +768,12 @@
       <div class="tf-badge-row">
         <span class="tf-badge" style="color:var(--jade-lt);border-color:rgba(61,139,122,.3);background:rgba(61,139,122,.07)">CIDOC CRM</span>
         <span class="tf-badge" style="color:var(--gold-lt);border-color:rgba(201,162,76,.3);background:rgba(201,162,76,.07)">Entity Resolution</span>
-        <span class="tf-badge" style="color:var(--terra-lt);border-color:rgba(184,90,58,.3);background:rgba(184,90,58,.07)">Neo4j</span>
+        <span class="tf-badge" style="color:var(--terra-lt);border-color:rgba(184,90,58,.3);background:rgba(184,90,58,.07)">Graph DB</span>
+        <span class="tf-badge" style="color:var(--cyan-lt);border-color:rgba(6,182,212,.3);background:rgba(6,182,212,.07)">SPARQL</span>
       </div>
       <div class="tf-title">From Spreadsheet<br><span style="color:var(--jade-lt)">to Knowledge Graph</span></div>
       <div class="tf-subtitle" style="color:var(--jade-lt)">Data Integration Engine · The Foundation</div>
-      <p class="tf-body">BecaGraph is the integration engine that powers the entire platform. It transforms raw Excel or CSV exports from museum collection management systems into a CIDOC CRM-compliant Neo4j knowledge graph — with LLM-powered entity resolution that identifies the same actor, place, or object across multiple institutional datasets.</p>
+      <p class="tf-body">BecaGraph is the integration engine that powers the entire platform. It transforms raw Excel or CSV exports from museum collection management systems into a CIDOC CRM-compliant RDF knowledge graph queryable via SPARQL — with LLM-powered entity resolution that identifies the same actor, place, or object across multiple institutional datasets.</p>
       <div class="tf-features">
         <div class="tf-feat"><div class="tf-feat-icon" style="background:rgba(61,139,122,.1);border:1px solid rgba(61,139,122,.2)">📂</div><span>Upload objects, actors, events, and institutions from any museum data export (XLSX · CSV)</span></div>
         <div class="tf-feat"><div class="tf-feat-icon" style="background:rgba(201,162,76,.1);border:1px solid rgba(201,162,76,.2)">🧠</div><span>Semantic matching resolves duplicate entities across institutions at configurable thresholds</span></div>
@@ -335,7 +788,7 @@
         <div class="terminal-mock">
           <div class="term-bar"><div class="td r"></div><div class="td y"></div><div class="td g"></div><span class="term-title">becagraph · pipeline</span></div>
           <div class="term-body">
-            <div class="t-cm">// Connecting to Neo4j...</div>
+            <div class="t-cm">// Connecting to Graph DB (SPARQL)...</div>
             <div><span class="t-k">status</span><span class="t-op">:</span> <span class="t-v">connected</span> ✓</div>
             <div>&nbsp;</div>
             <div class="t-cm">// Loading objects (1,247 rows)</div>
@@ -366,18 +819,18 @@
   <div style="max-width:1280px;margin:0 auto;padding:3rem 2.5rem 0">
     <div class="rv" style="margin-bottom:2.5rem">
       <div class="section-label sl-purple">Tool 02</div>
-      <h2 class="section-title" style="color:var(--cream)">Beca<em style="color:var(--purple-lt)">Chat</em></h2>
+      <h2 class="section-title" style="color:var(--cream)">Beca<em style="color:var(--purple-lt)">Chat</em> <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--purple-lt);opacity:.7;font-weight:400">[in progress]</span></h2>
     </div>
   </div>
   <div class="tool-feature flip rv" style="transition-delay:.05s">
     <div class="tf-content">
       <div class="tf-badge-row">
         <span class="tf-badge" style="color:var(--purple-lt);border-color:rgba(139,92,246,.3);background:rgba(139,92,246,.07)">Conversational AI</span>
-        <span class="tf-badge" style="color:var(--cyan-lt);border-color:rgba(6,182,212,.3);background:rgba(6,182,212,.07)">Live Cypher</span>
+        <span class="tf-badge" style="color:var(--cyan-lt);border-color:rgba(6,182,212,.3);background:rgba(6,182,212,.07)">Live SPARQL</span>
       </div>
       <div class="tf-title" style="color:var(--cream)">Ask the Graph,<br><span style="color:var(--purple-lt)">Get Answers</span></div>
       <div class="tf-subtitle" style="color:var(--purple-lt)">Natural Language Knowledge Graph Query</div>
-      <p class="tf-body">BecaChat lets researchers and museum professionals query the BECACO knowledge graph in plain language — no Cypher query language expertise needed. Type a question, and the LLM translates it into a graph query, executes it against Neo4j, and returns a structured, readable answer.</p>
+      <p class="tf-body">BecaChat lets researchers and museum professionals query the BECACO knowledge graph in plain language — no SPARQL expertise needed. Type a question, and the LLM translates it into a SPARQL query, executes it against the Graph DB endpoint, and returns a structured, readable answer.</p>
       <div class="tf-features">
         <div class="tf-feat">
           <div class="tf-feat-icon" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2)">🗣️</div>
@@ -385,7 +838,7 @@
         </div>
         <div class="tf-feat">
           <div class="tf-feat-icon" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2)">⚡</div>
-          <span>Automatically generates and executes Cypher queries against the live Neo4j graph</span>
+          <span>Automatically generates and executes SPARQL queries against the live Graph DB endpoint</span>
         </div>
         <div class="tf-feat">
           <div class="tf-feat-icon" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2)">🔍</div>
@@ -398,12 +851,12 @@
         <div class="chat-msg user">Who supplied objects from Mexico to European museums between 1950 and 1980?</div>
         <div class="chat-msg bot">
           <div class="chat-label">BecaChat · Graph Query</div>
-          <div class="chat-cypher">MATCH (a:Actor)-[:SUPPLIED]->(o:Object)<br>WHERE o.culture = "Mexico"<br>AND o.acquisition_year &gt;= 1950<br>RETURN a.name, count(o) ORDER BY count(o) DESC</div>
+          <div class="chat-cypher">SELECT ?actor (COUNT(?obj) AS ?count)<br>WHERE { ?obj :culture "Mexico" ;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:acquisitionYear ?y .<br>&nbsp;&nbsp;FILTER(?y &gt;= 1950)<br>&nbsp;&nbsp;?actor :supplied ?obj }<br>ORDER BY DESC(?count)</div>
           Found <strong style="color:var(--purple-lt)">180 actors</strong> — top result: G. Schmidt Pizarro (5120 objects across 7 museums).
         </div>
         <div class="chat-msg user">Show me the full provenance chain for object MQB-0447.</div>
         <div class="chat-msg bot">
-          <div class="chat-label">BecaChat · Provenance Trace</div>
+          <div class="chat-label">BecaChat · SPARQL Trace</div>
           Tracing 4-step chain: <em style="color:var(--cyan-lt)">Oaxaca (1962) → Schmidt Pizarro → Sotheby's NY (1967) → Leiden Volkenkunde (1971)</em>
         </div>
         <div class="chat-input-mock">
@@ -422,7 +875,7 @@
   <div style="max-width:1280px;margin:0 auto;padding:3rem 2.5rem 0">
     <div class="rv" style="margin-bottom:2.5rem">
       <div class="section-label sl-terra">Tool 03</div>
-      <h2 class="section-title">Beca<em style="color:var(--terra-lt)">Narratives</em></h2>
+      <h2 class="section-title">Beca<em style="color:var(--terra-lt)">Narratives</em> <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--terra-lt);opacity:.7;font-weight:400">[in progress]</span></h2>
     </div>
   </div>
   <div class="tool-feature rv" style="transition-delay:.05s">
@@ -609,6 +1062,137 @@
     btt.classList.toggle("visible", window.scrollY > 400);
   }, { passive: true });
   btt.addEventListener("click", e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+</script>
+
+<script>
+(function(){
+  var html = document.documentElement;
+
+  /* ── colour maps: dark → light replacement ─────────────────────── */
+  /* Text / foreground colours that are cream/warm-white in dark mode */
+  var TEXT_MAP = [
+    /* cream family (245,237,218 / 240,230,211 / 220,205,185) */
+    [/color\s*:\s*rgba\(245\s*,\s*237\s*,\s*218\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(28,21,10,'+Math.min(1,parseFloat(a)*1.2)+')'; }],
+    [/color\s*:\s*rgba\(240\s*,\s*230\s*,\s*211\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(28,21,10,'+Math.min(1,parseFloat(a)*1.2)+')'; }],
+    [/color\s*:\s*rgba\(220\s*,\s*205\s*,\s*185\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(28,21,10,'+Math.min(0.9,parseFloat(a)*1.1)+')'; }],
+    /* solid cream */
+    [/color\s*:\s*#f0e6d3/gi, 'color:#1c150a'],
+    [/color\s*:\s*#e8d5a3/gi, 'color:#5a3e10'],
+    /* gold variants — darken for light bg */
+    [/color\s*:\s*rgba\(212\s*,\s*168\s*,\s*67\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(107,80,16,'+Math.min(1,parseFloat(a)*1.4)+')'; }],
+    [/color\s*:\s*rgba\(201\s*,\s*162\s*,\s*76\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(107,80,16,'+Math.min(1,parseFloat(a)*1.4)+')'; }],
+    [/color\s*:\s*#c9a24c/gi, 'color:#7a5c14'],
+    [/color\s*:\s*#e8d5a3/gi, 'color:#5a3e10'],
+    [/color\s*:\s*#8a6d2b/gi, 'color:#6b5018'],
+    /* jade */
+    [/color\s*:\s*rgba\(61\s*,\s*139\s*,\s*122\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(30,90,78,'+Math.min(1,parseFloat(a)*1.3)+')'; }],
+    [/color\s*:\s*rgba\(90\s*,\s*171\s*,\s*154\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(42,107,92,'+parseFloat(a)+')'; }],
+    /* terra */
+    [/color\s*:\s*rgba\(184\s*,\s*90\s*,\s*58\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(120,45,20,'+Math.min(1,parseFloat(a)*1.3)+')'; }],
+    [/color\s*:\s*rgba\(212\s*,\s*121\s*,\s*90\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(150,60,30,'+parseFloat(a)+')'; }],
+    /* purple */
+    [/color\s*:\s*rgba\(167\s*,\s*139\s*,\s*250\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(109,40,217,'+parseFloat(a)+')'; }],
+    [/color\s*:\s*rgba\(196\s*,\s*181\s*,\s*253\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(109,40,217,'+parseFloat(a)+')'; }],
+    /* cyan */
+    [/color\s*:\s*rgba\(103\s*,\s*232\s*,\s*249\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(14,116,144,'+Math.min(1,parseFloat(a)*1.2)+')'; }],
+    [/color\s*:\s*rgba\(6\s*,\s*182\s*,\s*212\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'color:rgba(14,116,144,'+Math.min(1,parseFloat(a)*1.2)+')'; }],
+  ];
+
+  /* Background colours — dark overlays → light equivalents */
+  var BG_MAP = [
+    /* pure blacks / near-blacks */
+    [/background\s*:\s*rgba\(12\s*,\s*10\s*,\s*8\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(247,244,238,'+Math.min(.98,parseFloat(a))+')'; }],
+    [/background\s*:\s*rgba\(8\s*,\s*6\s*,\s*4\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(242,238,230,'+parseFloat(a)+')'; }],
+    [/background\s*:\s*rgba\(5\s*,\s*4\s*,\s*3\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(250,249,245,'+parseFloat(a)+')'; }],
+    [/background\s*:\s*rgba\(0\s*,\s*0\s*,\s*0\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(0,0,0,'+Math.min(0.08,parseFloat(a)*0.15)+')'; }],
+    [/background\s*:\s*rgba\(17\s*,\s*15\s*,\s*12\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(237,233,223,'+parseFloat(a)+')'; }],
+    /* rgba(255,255,255,.03/.04) — barely-there white overlays */
+    [/background\s*:\s*rgba\(255\s*,\s*255\s*,\s*255\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(0,0,0,'+Math.min(0.06, parseFloat(a)*1.2)+')'; }],
+    /* gold tints */
+    [/background\s*:\s*rgba\(212\s*,\s*168\s*,\s*67\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(138,107,30,'+parseFloat(a)+')'; }],
+    [/background\s*:\s*rgba\(201\s*,\s*162\s*,\s*76\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'background:rgba(138,107,30,'+parseFloat(a)+')'; }],
+  ];
+
+  /* Border colour map */
+  var BORDER_MAP = [
+    [/border(?:-color)?\s*:\s*rgba\(245\s*,\s*237\s*,\s*218\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'border-color:rgba(28,21,10,'+Math.min(0.3,parseFloat(a))+')'; }],
+    [/border(?:-color)?\s*:\s*rgba\(212\s*,\s*168\s*,\s*67\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'border-color:rgba(138,107,30,'+Math.min(1,parseFloat(a)*1.3)+')'; }],
+    [/border(?:-color)?\s*:\s*rgba\(201\s*,\s*162\s*,\s*76\s*,\s*([\d.]+)\)/gi,
+      function(_,a){ return 'border-color:rgba(138,107,30,'+Math.min(1,parseFloat(a)*1.3)+')'; }],
+  ];
+
+  /* Store original inline styles so we can restore in dark mode */
+  var originals = new WeakMap();
+
+  function applyLightInline() {
+    document.querySelectorAll('[style]').forEach(function(el) {
+      var orig = el.getAttribute('style');
+      if (!originals.has(el)) originals.set(el, orig);
+      var s = orig;
+      TEXT_MAP.forEach(function(pair){ s = s.replace(pair[0], pair[1]); });
+      BG_MAP.forEach(function(pair){ s = s.replace(pair[0], pair[1]); });
+      BORDER_MAP.forEach(function(pair){ s = s.replace(pair[0], pair[1]); });
+      el.setAttribute('style', s);
+    });
+  }
+
+  function restoreDarkInline() {
+    document.querySelectorAll('[style]').forEach(function(el) {
+      if (originals.has(el)) el.setAttribute('style', originals.get(el));
+    });
+  }
+
+  function applyLabels() {
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    var isLight = html.classList.contains('light-mode');
+    btn.querySelector('.tog-label').textContent = isLight ? 'Dark' : 'Light';
+    btn.querySelector('.tog-icon').textContent  = isLight ? '☀️' : '🌙';
+  }
+
+  /* Init on load */
+  var saved = localStorage.getItem('becaco-theme');
+  if (saved === 'light') {
+    html.classList.add('light-mode');
+    document.addEventListener('DOMContentLoaded', function(){ applyLightInline(); applyLabels(); });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    applyLabels();
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var goLight = !html.classList.contains('light-mode');
+      html.classList.toggle('light-mode', goLight);
+      localStorage.setItem('becaco-theme', goLight ? 'light' : 'dark');
+      if (goLight) applyLightInline(); else restoreDarkInline();
+      applyLabels();
+    });
+  });
+})();
 </script>
 </body>
 </html>
